@@ -1,0 +1,175 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opnora | App Development, Websites & AI Solutions</title><style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+line-height:1.6;
+}
+
+header{
+padding:80px 20px;
+text-align:center;
+background:linear-gradient(135deg,#0f172a,#1e3a8a);
+}
+
+header h1{
+font-size:60px;
+color:#38bdf8;
+margin-bottom:10px;
+}
+
+header p{
+font-size:20px;
+margin:10px 0;
+}
+
+.btn{
+display:inline-block;
+padding:14px 28px;
+background:#38bdf8;
+color:white;
+text-decoration:none;
+border-radius:10px;
+font-weight:bold;
+margin-top:20px;
+}
+
+section{
+padding:60px 20px;
+}
+
+.section-title{
+text-align:center;
+font-size:35px;
+margin-bottom:40px;
+color:#38bdf8;
+}
+
+.services{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+}
+
+.card{
+background:#1e293b;
+width:300px;
+padding:25px;
+border-radius:12px;
+box-shadow:0 0 15px rgba(0,0,0,.3);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.card h3{
+color:#38bdf8;
+margin-bottom:10px;
+}
+
+.about-box{
+max-width:900px;
+margin:auto;
+background:#1e293b;
+padding:25px;
+border-radius:12px;
+}
+
+footer{
+background:#020617;
+padding:30px;
+text-align:center;
+}
+
+.whatsapp{
+position:fixed;
+right:20px;
+bottom:20px;
+background:#25D366;
+color:white;
+padding:15px 20px;
+border-radius:50px;
+text-decoration:none;
+font-weight:bold;
+}
+</style></head><body><header><h1>Opnora</h1><p>Turn Your Idea Into A Real App</p><p>
+Android Apps • Websites • AI Solutions
+</p><p>
+Let's Build Something Amazing Together
+</p><a class="btn"
+href="https://wa.me/918114434063">
+Contact On WhatsApp
+</a>
+
+</header><section><h2 class="section-title">About Opnora</h2><div class="about-box"><p>
+Opnora helps businesses, schools, academies and startups
+turn ideas into powerful digital products.We build Android Apps, Websites and AI Solutions
+with modern technology and professional design.
+
+</p></div></section><section><h2 class="section-title">Our Services</h2><div class="services"><div class="card">
+<h3>Android App Development</h3>
+<p>Custom Android apps for startups, schools and businesses.</p>
+</div><div class="card">
+<h3>Website Development</h3>
+<p>Professional responsive websites with modern UI.</p>
+</div><div class="card">
+<h3>Firebase Integration</h3>
+<p>Authentication, Database, Notifications & Hosting.</p>
+</div><div class="card">
+<h3>AI Solutions</h3>
+<p>Smart AI-powered tools and automation solutions.</p>
+</div></div></section><section><h2 class="section-title">Portfolio</h2><div class="services"><div class="card">
+<h3>ZenG Chat</h3>
+<p>Real-time Firebase Chat Application.</p>
+</div><div class="card">
+<h3>School Management App</h3>
+<p>Attendance, Homework, Fees & Student Management.</p>
+</div><div class="card">
+<h3>Cricket Academy Website</h3>
+<p>Player Registration & Academy Management.</p>
+</div></div></section><section><h2 class="section-title">Pricing</h2><div class="services"><div class="card">
+<h3>Basic Website</h3>
+<p>DM For Pricing</p>
+</div><div class="card">
+<h3>Business Website</h3>
+<p>DM For Pricing</p>
+</div><div class="card">
+<h3>Android App Development</h3>
+<p>DM For Pricing</p>
+</div><div class="card">
+<h3>Custom Software Solutions</h3>
+<p>DM For Pricing</p>
+</div></div></section><section><h2 class="section-title">Why Choose Opnora?</h2><div class="services"><div class="card">
+<h3>Fast Delivery</h3>
+<p>Quick project completion and timely updates.</p>
+</div><div class="card">
+<h3>Affordable Solutions</h3>
+<p>Budget-friendly development services.</p>
+</div><div class="card">
+<h3>Full Support</h3>
+<p>Support even after project delivery.</p>
+</div></div></section><section><h2 class="section-title">Contact Us</h2><div class="about-box"><p>📱 WhatsApp: 8114434063</p><br><a class="btn"
+href="https://wa.me/918114434063">
+Chat On WhatsApp
+</a>
+
+</div></section><footer><h3>Opnora</h3><p>Android Apps • Websites • AI Solutions</p><p>Founded by Manish Prajapat</p><p>© 2026 Opnora. All Rights Reserved.</p></footer><a class="whatsapp"
+href="https://wa.me/918114434063">
+WhatsApp
+</a>
+
+</body>
+</html>
