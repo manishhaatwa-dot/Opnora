@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "title": "XtureAI",
+    "description": "AI Company Website",
+    "image": "images/xtureai.jpg",
+    "link": "https://xtureai.com"
+  },
+  {
+    "title": "AppCreatorPali",
+    "description": "App Development Platform",
+    "image": "images/appcreatorpali.jpg",
+    "link": "https://appcreatorpali.xtureai.com"
+  },
+  {
+    "title": "Opnora",
+    "description": "Website & App Development",
+    "image": "images/opnora.jpg",
+    "link": "https://opnora.com"
+  }
+]
