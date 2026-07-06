@@ -963,6 +963,17 @@ box-shadow:
 
 }
 
+.project-img{
+width:100%;
+height:220px;
+object-fit:cover;
+border-radius:15px;
+margin-bottom:15px;
+}
+
+.portfolio-card{
+overflow:hidden;
+}
 /* ===========================
    END OF CSS
 =========================== */
