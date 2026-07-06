@@ -142,6 +142,8 @@ box-shadow:0 0 20px rgba(56,189,248,.45);
 
 /* ================= HERO ================= */
 
+/* ================= HERO ================= */
+
 .hero{
 min-height:100vh;
 padding:150px 8% 80px;
@@ -149,6 +151,15 @@ display:grid;
 grid-template-columns:1fr 1fr;
 align-items:center;
 gap:60px;
+
+background:
+linear-gradient(rgba(5,10,25,.75), rgba(5,10,25,.85)),
+url("images/hero-bg.jpeg");
+
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+border-radius:0 0 30px 30px;
 }
 
 .hero h1{
@@ -249,14 +260,6 @@ color:#dbeafe;
 display:flex;
 justify-content:center;
 align-items:center;
-background:
-linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.35)),
-url("images/hero-bg.jpeg");
-background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
-border-radius:20px;
-overflow:hidden;
 }
 
 .laptop{
