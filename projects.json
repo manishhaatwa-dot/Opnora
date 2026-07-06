@@ -19,14 +19,12 @@
     "image": "images/appcreatorpali.jpeg",
     "link": "https://appcreatorpali.xtureai.com",
     "button": "Visit Website"
-  }
-
-   {
-    "title": "Founder&CEO",
-    "description": "Custom Business Website Solutions",
-    "image": "images/appcreatorpali.jpeg",
-    "link": "https://opnora.com",
-     "link": "https://xtureai.com",
-    "button": "Visit Website"
+  },
+  {
+    "title": "Founder & CEO",
+    "description": "Founder of XtureAI and Opnora",
+    "image": "images/CEO.jpeg",
+    "link": "https://xtureai.com",
+    "button": "Visit Profile"
   }
 ]
