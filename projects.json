@@ -1,20 +1,23 @@
 [
   {
     "title": "XtureAI",
-    "description": "AI Company Website",
+    "description": "AI Solutions, Website & Mobile App Development",
     "image": "images/xtureai.jpg",
-    "link": "https://xtureai.com"
-  },
-  {
-    "title": "AppCreatorPali",
-    "description": "App Development Platform",
-    "image": "images/appcreatorpali.jpg",
-    "link": "https://appcreatorpali.xtureai.com"
+    "link": "https://xtureai.com",
+    "button": "Visit Website"
   },
   {
     "title": "Opnora",
-    "description": "Website & App Development",
+    "description": "Professional Website & App Development Company",
     "image": "images/opnora.jpg",
-    "link": "https://opnora.com"
+    "link": "https://opnora.com",
+    "button": "Visit Website"
+  },
+  {
+    "title": "AppCreatorPali",
+    "description": "Custom Business Website Solutions",
+    "image": "images/appcreatorpali.jpg",
+    "link": "https://appcreatorpali.xtureai.com",
+    "button": "Visit Website"
   }
 ]
