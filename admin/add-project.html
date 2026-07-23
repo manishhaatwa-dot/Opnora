@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Add Project | Opnora Admin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<div class="sidebar">
+
+<div class="logo">
+
+<i class="fa-solid fa-layer-group"></i>
+
+<h2>Opnora</h2>
+
+<p>Admin Panel</p>
+
+</div>
+
+<ul>
+
+<li onclick="location.href='dashboard.html'">
+<i class="fa-solid fa-chart-line"></i>
+Dashboard
+</li>
+
+<li class="active">
+<i class="fa-solid fa-plus"></i>
+Add Project
+</li>
+
+<li onclick="location.href='edit-project.html'">
+<i class="fa-solid fa-pen"></i>
+Edit Project
+</li>
+
+<li id="logoutBtn">
+<i class="fa-solid fa-right-from-bracket"></i>
+Logout
+</li>
+
+</ul>
+
+</div>
+
+<div class="main-content">
+
+<h1>Add New Project</h1>
+
+<form id="projectForm">
+
+<div class="form-group">
+
+<label>Project Name</label>
+
+<input type="text" id="projectName" placeholder="Enter Project Name">
+
+</div>
+
+<div class="form-group">
+
+<label>Project Description</label>
+
+<textarea id="projectDescription" rows="5" placeholder="Enter Description"></textarea>
+
+</div>
+
+<div class="form-group">
+
+<label>Project Link</label>
+
+<input type="url" id="projectLink" placeholder="https://">
+
+</div>
+
+<div class="form-group">
+
+<label>Category</label>
+
+<select id="projectCategory">
+
+<option>Website</option>
+
+<option>Android App</option>
+
+<option>AI</option>
+
+<option>Software</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Project Image</label>
+
+<input type="file" id="projectImage" accept="image/*">
+
+</div>
+
+<button type="submit" class="save-btn">
+
+<i class="fa-solid fa-floppy-disk"></i>
+
+Save Project
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
