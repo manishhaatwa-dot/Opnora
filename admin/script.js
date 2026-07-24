@@ -16,24 +16,29 @@ document.addEventListener("DOMContentLoaded", () => {
         sessionStorage.removeItem(TOKEN_KEY);
     }
 
-    function readTokenFromHash() {
-        const hash = window.location.hash.startsWith("#")
+    function cleanUrl() {
+        history.replaceState(null, "", window.location.pathname);
+    }
+
+    function readTokenFromUrl() {
+        const searchParams = new URLSearchParams(window.location.search);
+        const hashString = window.location.hash.startsWith("#")
             ? window.location.hash.slice(1)
             : "";
+        const hashParams = new URLSearchParams(hashString);
 
-        const params = new URLSearchParams(hash);
-        const token = params.get("token");
-        const error = params.get("error");
+        const token = searchParams.get("token") || hashParams.get("token");
+        const error = searchParams.get("error") || hashParams.get("error");
 
         if (token) {
             saveToken(token);
-            history.replaceState(null, "", window.location.pathname);
+            cleanUrl();
             return token;
         }
 
         if (error) {
             alert("OAuth failed: " + error);
-            history.replaceState(null, "", window.location.pathname);
+            cleanUrl();
         }
 
         return null;
@@ -70,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function handleLoginPage() {
         const loginBtn = document.getElementById("githubLogin");
 
-        readTokenFromHash();
+        readTokenFromUrl();
 
         const user = await checkAuth();
 
