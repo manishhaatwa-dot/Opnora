@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Opnora Admin Panel</title>
+  <title>Opnora Admin Panel (Secure)</title>
   <style>
     :root { --primary: #000; --bg: #f9f9f9; --border: #ddd; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: var(--bg); }
@@ -27,9 +27,11 @@
 <body>
 
   <div class="container">
-    <div id="login-view">
+    <div id="loading-state" style="text-align:center; padding:50px 0;">Checking authorization...</div>
+
+    <div id="login-view" style="display: none;">
       <h1>Opnora Admin Access</h1>
-      <p>Authentication required. Only manishhaatwa-dot is permitted.</p>
+      <p>Authentication required. Secure system.</p>
       <button class="btn" onclick="login()">Login with GitHub</button>
     </div>
 
@@ -70,8 +72,8 @@
       </div>
       <div class="form-group">
         <label>Image Upload</label>
-        <input type="file" id="p-image" accept="image/jpeg, image/png, image/webp">
-        <small style="display:block; color:#666; margin-top:5px;">Leave empty to keep existing image when editing.</small>
+        <input type="file" id="p-image" accept="image/jpeg, image/png, image/webp, image/gif">
+        <small style="display:block; color:#666; margin-top:5px;">Max 5MB. Leave empty to keep existing image when editing.</small>
       </div>
       
       <div style="display:flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
@@ -82,62 +84,69 @@
   </div>
 
   <script>
-    // =========================================================================
-    // IMPORTANT: REPLACE THIS URL WITH YOUR ACTUAL CLOUDFLARE WORKER URL
-    // =========================================================================
-    const WORKER_URL = "https://YOUR-WORKER-URL.workers.dev";
+    // Cloudflare Worker URL Configured
+    const WORKER_URL = "https://opnora-admin-api.manishhaatwa.workers.dev";
     
-    let token = localStorage.getItem('opnora_admin_token');
     let projects = [];
 
-    // Check URL for OAuth Token redirect
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlToken = urlParams.get('token');
-    if (urlToken) {
-      token = urlToken;
-      localStorage.setItem('opnora_admin_token', token);
-      window.history.replaceState({}, document.title, window.location.pathname);
+    // Helper: Secure fetch that always includes HttpOnly cookies
+    async function secureFetch(endpoint, options = {}) {
+      const mergedOptions = {
+        ...options,
+        credentials: "include", // Sends HttpOnly cookie securely
+        headers: {
+          'Content-Type': 'application/json',
+          ...(options.headers || {})
+        }
+      };
+      
+      const res = await fetch(`${WORKER_URL}${endpoint}`, mergedOptions);
+      if (res.status === 401 || res.status === 403) {
+        showLoginView();
+        throw new Error("Unauthorized");
+      }
+      return res;
     }
 
-    if (token) {
-      document.getElementById('login-view').style.display = 'none';
-      document.getElementById('dashboard-view').style.display = 'block';
-      loadProjects();
+    // Check if user is logged in on page load
+    async function checkAuth() {
+      try {
+        await secureFetch('/api/check-auth');
+        document.getElementById('loading-state').style.display = 'none';
+        document.getElementById('dashboard-view').style.display = 'block';
+        loadProjects();
+      } catch (err) {
+        showLoginView();
+      }
     }
 
+    function showLoginView() {
+      document.getElementById('loading-state').style.display = 'none';
+      document.getElementById('dashboard-view').style.display = 'none';
+      document.getElementById('login-view').style.display = 'block';
+    }
+
+    // Redirect to worker for GitHub OAuth
     function login() {
       window.location.href = `${WORKER_URL}/auth/login`;
     }
 
-    function logout() {
-      localStorage.removeItem('opnora_admin_token');
+    // Tell worker to clear the cookie
+    async function logout() {
+      try {
+        await secureFetch('/api/logout');
+      } catch(e) {}
       window.location.reload();
-    }
-
-    async function authFetch(endpoint, options = {}) {
-      const headers = { 'Authorization': `Bearer ${token}` };
-      if (options.body) headers['Content-Type'] = 'application/json';
-      
-      const res = await fetch(`${WORKER_URL}${endpoint}`, {
-        ...options,
-        headers: { ...headers, ...(options.headers || {}) }
-      });
-
-      if (res.status === 401 || res.status === 403) {
-        alert("Session expired or access denied.");
-        logout();
-      }
-      return res;
     }
 
     async function loadProjects() {
       showLoading(true);
       try {
-        const res = await authFetch('/api/projects');
+        const res = await secureFetch('/api/projects');
         projects = await res.json();
         renderProjects();
       } catch (err) {
-        alert("Failed to load projects.");
+        if(err.message !== "Unauthorized") alert("Failed to load projects.");
       }
       showLoading(false);
     }
@@ -204,9 +213,15 @@
       let finalImagePath = document.getElementById('existing-image').value;
 
       if (imageFile) {
+        if (imageFile.size > 5 * 1024 * 1024) {
+          alert("Image size must be less than 5MB");
+          btn.disabled = false;
+          btn.innerText = "Save Project";
+          return;
+        }
+
         finalImagePath = await uploadImage(imageFile);
         if (!finalImagePath) {
-          alert("Image upload failed");
           btn.disabled = false;
           btn.innerText = "Save Project";
           return;
@@ -216,9 +231,9 @@
       const projectData = { title, description, image: finalImagePath, link, button };
 
       if (index > -1) {
-        projects[index] = projectData; // Update
+        projects[index] = projectData;
       } else {
-        projects.push(projectData); // Add
+        projects.push(projectData);
       }
 
       await syncToGitHub();
@@ -238,20 +253,22 @@
         const reader = new FileReader();
         reader.onload = async (e) => {
           const base64String = e.target.result.split(',')[1];
-          const filename = Date.now() + "_" + file.name.replace(/[^a-zA-Z0-9.]/g, ''); // sanitize filename
+          const filename = Date.now() + "_" + file.name.replace(/[^a-zA-Z0-9.]/g, ''); 
           
           try {
-            const res = await authFetch('/api/upload', {
+            const res = await secureFetch('/api/upload', {
               method: 'POST',
               body: JSON.stringify({ filename, base64content: base64String })
             });
             const data = await res.json();
             if (data.success) {
-              resolve(data.path); // returns 'images/filename.ext'
+              resolve(data.path);
             } else {
+              alert("Image upload failed: " + data.error);
               resolve(null);
             }
           } catch (err) {
+            alert("Image upload failed.");
             resolve(null);
           }
         };
@@ -262,7 +279,7 @@
     async function syncToGitHub() {
       showLoading(true);
       try {
-        const res = await authFetch('/api/projects', {
+        const res = await secureFetch('/api/projects', {
           method: 'POST',
           body: JSON.stringify(projects)
         });
@@ -270,10 +287,10 @@
         if (data.success) {
           renderProjects();
         } else {
-          alert("Failed to save changes to GitHub.");
+          alert("Failed to save to GitHub: " + data.error);
         }
       } catch (err) {
-        alert("Error connecting to server.");
+        if(err.message !== "Unauthorized") alert("Error saving data.");
       }
       showLoading(false);
     }
@@ -282,6 +299,8 @@
       document.getElementById('loading').style.display = show ? 'block' : 'none';
       document.getElementById('projects-list').style.opacity = show ? '0.5' : '1';
     }
+
+    window.onload = checkAuth;
   </script>
 </body>
 </html>
