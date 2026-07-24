@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Opnora Admin</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -16,35 +13,21 @@
       color: #e2e8f0;
       min-height: 100vh;
     }
-
     .container {
       max-width: 900px;
       margin: 0 auto;
       padding: 32px 20px;
     }
-
     .card {
       background: #111827;
       border: 1px solid #334155;
       border-radius: 16px;
       padding: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
     }
-
-    .hidden {
-      display: none;
-    }
-
-    h1, h2, h3 {
-      margin-top: 0;
-      color: #f8fafc;
-    }
-
-    p {
-      color: #94a3b8;
-      line-height: 1.6;
-    }
-
+    .hidden { display: none; }
+    h1, h2 { margin-top: 0; color: #f8fafc; }
+    p { color: #94a3b8; line-height: 1.6; }
     .btn {
       display: inline-block;
       padding: 12px 18px;
@@ -52,24 +35,14 @@
       border: none;
       font-size: 15px;
       cursor: pointer;
-      transition: 0.2s ease;
     }
-
-    .btn-primary {
-      background: #2563eb;
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: #1d4ed8;
-    }
-
+    .btn-primary { background: #2563eb; color: white; }
+    .btn-primary:hover { background: #1d4ed8; }
     .btn-secondary {
       background: transparent;
       border: 1px solid #475569;
       color: #e2e8f0;
     }
-
     .status {
       margin-top: 16px;
       padding: 12px 14px;
@@ -80,19 +53,16 @@
       color: #cbd5e1;
       word-break: break-word;
     }
-
     .status.success {
       border-color: #14532d;
       background: #052e16;
       color: #bbf7d0;
     }
-
     .status.error {
       border-color: #7f1d1d;
       background: #450a0a;
       color: #fecaca;
     }
-
     .topbar {
       display: flex;
       justify-content: space-between;
@@ -101,7 +71,6 @@
       margin-bottom: 24px;
       flex-wrap: wrap;
     }
-
     .badge {
       display: inline-block;
       padding: 8px 12px;
@@ -111,45 +80,33 @@
       font-size: 14px;
       background: #0b1220;
     }
-
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
       margin-top: 20px;
     }
-
     .box {
       background: #0b1220;
       border: 1px solid #334155;
       border-radius: 14px;
       padding: 16px;
     }
-
     .label {
       font-size: 13px;
       color: #94a3b8;
       margin-bottom: 8px;
     }
-
     .value {
       font-size: 18px;
       font-weight: bold;
       color: #f8fafc;
       word-break: break-word;
     }
-
     .small {
       font-size: 13px;
       color: #94a3b8;
       margin-top: 8px;
-    }
-
-    code {
-      background: #1e293b;
-      padding: 2px 6px;
-      border-radius: 6px;
-      color: #e2e8f0;
     }
   </style>
 </head>
@@ -171,7 +128,7 @@
         <button id="logoutBtn" class="btn btn-secondary">Logout</button>
       </div>
 
-      <p>Login successful. Token is kept only in memory for this tab, so refresh ya tab close karne par dobara login karna padega.</p>
+      <p>Login successful. Token is stored only for this browser tab session and is cleared on logout or when the tab session ends.</p>
 
       <div class="grid">
         <div class="box">
@@ -181,8 +138,8 @@
 
         <div class="box">
           <div class="label">Storage mode</div>
-          <div class="value">Memory only</div>
-          <div class="small">No localStorage, no sessionStorage.</div>
+          <div class="value">sessionStorage</div>
+          <div class="small">Shared laptop ke liye localStorage se better.</div>
         </div>
 
         <div class="box">
@@ -198,6 +155,7 @@
 
   <script>
     const API_BASE = "https://opnora-admin-api.manishhaatwa.workers.dev";
+    const TOKEN_KEY = "opnora_admin_token";
 
     let authToken = null;
     let authUser = null;
@@ -221,9 +179,7 @@
       loginPage.classList.add("hidden");
       dashboardPage.classList.remove("hidden");
       authState.textContent = "Authenticated";
-      userBadge.textContent = user.name
-        ? `${user.login} • ${user.name}`
-        : user.login;
+      userBadge.textContent = user.name ? `${user.login} • ${user.name}` : user.login;
     }
 
     function setLoginStatus(message, type = "") {
@@ -236,6 +192,26 @@
       dashboardStatus.className = "status" + (type ? " " + type : "");
     }
 
+    function saveToken(token) {
+      authToken = token;
+      sessionStorage.setItem(TOKEN_KEY, token);
+    }
+
+    function loadToken() {
+      if (authToken) return authToken;
+      const saved = sessionStorage.getItem(TOKEN_KEY);
+      if (saved) {
+        authToken = saved;
+        return saved;
+      }
+      return null;
+    }
+
+    function clearToken() {
+      authToken = null;
+      sessionStorage.removeItem(TOKEN_KEY);
+    }
+
     function readTokenFromRedirect() {
       const hash = window.location.hash.startsWith("#")
         ? window.location.hash.slice(1)
@@ -246,7 +222,7 @@
       const error = params.get("error");
 
       if (token) {
-        authToken = token;
+        saveToken(token);
         history.replaceState(null, "", window.location.pathname + window.location.search);
         return token;
       }
@@ -260,12 +236,14 @@
     }
 
     async function secureFetch(path, options = {}) {
-      if (!authToken) {
+      const token = loadToken();
+
+      if (!token) {
         throw new Error("Missing token");
       }
 
       const headers = new Headers(options.headers || {});
-      headers.set("Authorization", "Bearer " + authToken);
+      headers.set("Authorization", "Bearer " + token);
 
       return fetch(API_BASE + path, {
         ...options,
@@ -291,14 +269,21 @@
       return data.user;
     }
 
-    async function handleLoginSuccess() {
+    async function restoreSession() {
       try {
-        setLoginStatus("OAuth callback received. Verifying login...");
+        const existingToken = loadToken();
+        if (!existingToken) {
+          showLoginPage();
+          setLoginStatus("Please click GitHub login.");
+          return;
+        }
+
+        setLoginStatus("Checking saved login...");
         const user = await checkAuth();
         showDashboardPage(user);
         setDashboardStatus("Authenticated successfully. Dashboard opened automatically.", "success");
       } catch (err) {
-        authToken = null;
+        clearToken();
         authUser = null;
         showLoginPage();
         setLoginStatus(err.message || "Login failed", "error");
@@ -310,10 +295,10 @@
     }
 
     function logout() {
-      authToken = null;
+      clearToken();
       authUser = null;
       showLoginPage();
-      setLoginStatus("Logged out. Token cleared from memory.", "success");
+      setLoginStatus("Logged out. Token cleared from this tab session.", "success");
     }
 
     loginBtn.addEventListener("click", startLogin);
@@ -321,13 +306,8 @@
 
     async function init() {
       showLoginPage();
-      const token = readTokenFromRedirect();
-
-      if (token) {
-        await handleLoginSuccess();
-      } else {
-        setLoginStatus("Please click GitHub login.");
-      }
+      readTokenFromRedirect();
+      await restoreSession();
     }
 
     init();
