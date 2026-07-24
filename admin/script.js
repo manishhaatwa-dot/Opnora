@@ -1,26 +1,99 @@
-const loginBtn = document.getElementById("githubLogin");
+const API_BASE = "https://opnora-admin-api.manishhaatwa.workers.dev";
+const TOKEN_KEY = "opnora_admin_token";
 
-loginBtn.addEventListener("click", () => {
-    // 1. User se GitHub Personal Access Token (PAT) maangein
-    const token = prompt("Please enter your GitHub Personal Access Token (PAT):");
+document.addEventListener("DOMContentLoaded", () => {
+    const loginBtn = document.getElementById("githubLogin");
 
-    if (!token) {
-        alert("Login cancel ho gaya. Token daalna zaroori hai!");
-        return;
+    function saveToken(token) {
+        sessionStorage.setItem(TOKEN_KEY, token);
     }
 
-    // 2. Button par loading state dikhayein
-    loginBtn.disabled = true;
-    loginBtn.innerHTML = `
-        <i class="fa-solid fa-spinner fa-spin"></i>
-        Connecting to GitHub...
-    `;
+    function loadToken() {
+        return sessionStorage.getItem(TOKEN_KEY);
+    }
 
-    // 3. Token ko browser ki memory (localStorage) me safe save karein
-    localStorage.setItem('gh_token', token);
+    function clearToken() {
+        sessionStorage.removeItem(TOKEN_KEY);
+    }
 
-    // 4. Token save hone ke baad dashboard par bhej dein
-    setTimeout(() => {
-        window.location.href = "dashboard.html";
-    }, 1500);
+    function readTokenFromHash() {
+        const hash = window.location.hash.startsWith("#")
+            ? window.location.hash.slice(1)
+            : "";
+
+        const params = new URLSearchParams(hash);
+        const token = params.get("token");
+        const error = params.get("error");
+
+        if (token) {
+            saveToken(token);
+            history.replaceState(null, "", window.location.pathname);
+            return token;
+        }
+
+        if (error) {
+            alert("OAuth failed: " + error);
+            history.replaceState(null, "", window.location.pathname);
+        }
+
+        return null;
+    }
+
+    async function checkAuth() {
+        const token = loadToken();
+
+        if (!token) return false;
+
+        try {
+            const response = await fetch(`${API_BASE}/api/check-auth`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.ok) {
+                clearToken();
+                return false;
+            }
+
+            return true;
+        } catch (error) {
+            clearToken();
+            return false;
+        }
+    }
+
+    async function initLoginFlow() {
+        readTokenFromHash();
+
+        const isAuthenticated = await checkAuth();
+
+        if (isAuthenticated) {
+            window.location.href = "dashboard.html";
+            return;
+        }
+
+        if (loginBtn) {
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = `
+                <i class="fa-brands fa-github"></i>
+                Login with GitHub
+            `;
+
+            loginBtn.addEventListener("click", () => {
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = `
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    Redirecting...
+                `;
+                window.location.href = `${API_BASE}/auth/login`;
+            });
+        }
+    }
+
+    initLoginFlow();
 });
