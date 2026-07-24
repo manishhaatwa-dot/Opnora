@@ -21,14 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function readTokenFromUrl() {
-        const searchParams = new URLSearchParams(window.location.search);
-        const hashString = window.location.hash.startsWith("#")
-            ? window.location.hash.slice(1)
-            : "";
-        const hashParams = new URLSearchParams(hashString);
-
-        const token = searchParams.get("token") || hashParams.get("token");
-        const error = searchParams.get("error") || hashParams.get("error");
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get("token");
+        const error = params.get("error");
 
         if (token) {
             saveToken(token);
@@ -39,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (error) {
             alert("OAuth failed: " + error);
             cleanUrl();
+            return null;
         }
 
         return null;
