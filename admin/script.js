@@ -8,6 +8,7 @@ const dashboardSection = document.getElementById("dashboardSection");
 
 const projectCount = document.getElementById("projectCount");
 const topbarTitle = document.querySelector(".topbar h1");
+const statusMsg = document.getElementById("statusMsg");
 
 async function apiFetch(path, options = {}) {
   return fetch(`${API_BASE}${path}`, {
@@ -18,6 +19,10 @@ async function apiFetch(path, options = {}) {
       ...(options.headers || {})
     }
   });
+}
+
+function setStatus(message) {
+  if (statusMsg) statusMsg.textContent = message;
 }
 
 function showLogin() {
@@ -53,11 +58,13 @@ function clearQueryParams() {
 
 async function checkAuth() {
   try {
+    setStatus("Checking login status...");
     const res = await apiFetch("/api/check-auth", { method: "GET" });
     const data = await res.json();
 
     if (!res.ok || !data.authenticated) {
       showLogin();
+      setStatus("Ready to login.");
       return;
     }
 
@@ -65,10 +72,12 @@ async function checkAuth() {
     showDashboard();
   } catch (err) {
     showLogin();
+    setStatus("Unable to verify login right now.");
   }
 }
 
 function loginWithGitHub() {
+  setStatus("Redirecting to GitHub...");
   window.location.href = `${API_BASE}/auth/login`;
 }
 
