@@ -4,17 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Opnora Admin</title>
+  <link rel="icon" href="data:,">
   <style>
     :root {
       --bg: #0b1020;
       --bg-2: #121933;
-      --card: rgba(18, 25, 51, 0.88);
+      --card: rgba(18, 25, 51, 0.92);
+      --card-2: rgba(255, 255, 255, 0.03);
       --border: rgba(255, 255, 255, 0.08);
       --text: #f5f7ff;
       --muted: #a7b0cb;
       --primary: #5b8cff;
       --primary-hover: #4a7cf4;
-      --danger: #ff6b7d;
       --success: #1fc98a;
       --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
       --radius: 18px;
@@ -50,7 +51,7 @@
 
     .panel {
       width: 100%;
-      max-width: 1080px;
+      max-width: 1100px;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -61,7 +62,7 @@
 
     #loginSection {
       display: flex;
-      min-height: 700px;
+      min-height: 720px;
     }
 
     .login-left,
@@ -214,9 +215,19 @@
       line-height: 1.5;
     }
 
+    #statusMsg {
+      margin-top: 16px;
+      min-height: 20px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
     #dashboardSection {
       display: none;
-      min-height: 700px;
+      min-height: 720px;
       padding: 28px;
     }
 
@@ -250,7 +261,7 @@
     .hero-card,
     .side-card,
     .stat-card {
-      background: rgba(255,255,255,0.03);
+      background: var(--card-2);
       border: 1px solid var(--border);
       border-radius: 18px;
     }
@@ -385,7 +396,6 @@
 <body>
   <main class="page">
     <div class="panel">
-
       <section id="loginSection">
         <div class="login-left">
           <div class="brand-badge">
@@ -409,15 +419,17 @@
         <div class="login-right">
           <div class="auth-card">
             <h2>Welcome back</h2>
-            <p>
-              Continue with GitHub to access Opnora admin dashboard.
-            </p>
+            <p>Continue with GitHub to access Opnora admin dashboard.</p>
 
-            <button id="githubLogin" class="btn btn-primary">Continue with GitHub</button>
+            <button id="githubLogin" class="btn btn-primary" type="button">
+              Continue with GitHub
+            </button>
 
             <div class="mini-note">
               Agar login successful hoga to dashboard automatically open ho jayega.
             </div>
+
+            <div id="statusMsg">Ready to login.</div>
           </div>
         </div>
       </section>
@@ -428,7 +440,7 @@
             <h1>Welcome, Admin</h1>
             <p>Authenticated control area for Opnora management.</p>
           </div>
-          <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+          <button id="logoutBtn" class="btn btn-secondary" type="button">Logout</button>
         </div>
 
         <div class="hero-strip">
@@ -480,7 +492,6 @@
           Dashboard UI currently static summary dikhata hai. Real data endpoints baad me isi structure me add kiye ja sakte hain.
         </div>
       </section>
-
     </div>
   </main>
 
