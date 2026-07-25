@@ -1,127 +1,117 @@
-const API_BASE = "https://opnora-admin-api.manishhaatwa.workers.dev";
+(() => {
+  const API_BASE = "https://opnora-admin-api.manishhaatwa.workers.dev";
+  const AUTH_URL = `${API_BASE}/api/check-auth`;
+  const LOGOUT_URL = `${API_BASE}/api/logout`;
+  const PROJECTS_URL = "/projects.json";
+  const LOGIN_URL = "./index.html";
 
-const githubLoginBtn = document.getElementById("githubLogin");
-const logoutBtn = document.getElementById("logoutBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const projectCountEl = document.getElementById("projectCount");
+  const topbarTitleEl = document.querySelector(".topbar h1");
 
-const loginSection = document.getElementById("loginSection");
-const dashboardSection = document.getElementById("dashboardSection");
+  function redirectToLogin() {
+    window.location.replace(LOGIN_URL);
+  }
 
-const projectCount = document.getElementById("projectCount");
-const topbarTitle = document.querySelector(".topbar h1");
-const statusMsg = document.getElementById("statusMsg");
-
-async function apiFetch(path, options = {}) {
-  return fetch(`${API_BASE}${path}`, {
-    ...options,
-    credentials: "include",
-    headers: {
-      ...(options.headers || {})
+  function setWelcome(username) {
+    if (topbarTitleEl) {
+      topbarTitleEl.textContent = `Welcome, ${username || "Admin"}`;
     }
-  });
-}
-
-function setStatus(message) {
-  if (statusMsg) statusMsg.textContent = message;
-}
-
-function showLogin() {
-  if (loginSection) loginSection.style.display = "flex";
-  if (dashboardSection) dashboardSection.style.display = "none";
-}
-
-function showDashboard() {
-  if (loginSection) loginSection.style.display = "none";
-  if (dashboardSection) dashboardSection.style.display = "block";
-}
-
-function setUserUI(user) {
-  if (topbarTitle) {
-    const name = user && (user.name || user.login) ? (user.name || user.login) : "Admin";
-    topbarTitle.textContent = `Welcome, ${name}`;
   }
 
-  if (projectCount) {
-    projectCount.textContent = "12";
+  function setProjectCount(count) {
+    if (projectCountEl) {
+      projectCountEl.textContent = String(count);
+    }
   }
-}
 
-function getQueryError() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("error");
-}
-
-function clearQueryParams() {
-  const cleanUrl = window.location.origin + window.location.pathname;
-  window.history.replaceState({}, document.title, cleanUrl);
-}
-
-async function checkAuth() {
-  try {
-    setStatus("Checking login status...");
-
-    const res = await apiFetch("/api/check-auth", {
-      method: "GET"
+  async function checkAuth() {
+    const response = await fetch(AUTH_URL, {
+      method: "GET",
+      headers: {
+        "Accept": "application/json"
+      },
+      cache: "no-store"
     });
 
-    let data = {};
+    if (!response.ok) {
+      throw new Error("Unauthorized");
+    }
+
+    const data = await response.json();
+
+    if (!data || data.loggedIn !== true) {
+      throw new Error("Not logged in");
+    }
+
+    return data;
+  }
+
+  async function loadProjects() {
     try {
-      data = await res.json();
-    } catch (e) {
-      data = {};
+      const response = await fetch(PROJECTS_URL, {
+        method: "GET",
+        headers: {
+          "Accept": "application/json"
+        },
+        cache: "no-store"
+      });
+
+      if (!response.ok) {
+        setProjectCount(0);
+        return;
+      }
+
+      const data = await response.json();
+
+      if (Array.isArray(data)) {
+        setProjectCount(data.length);
+        return;
+      }
+
+      if (Array.isArray(data.projects)) {
+        setProjectCount(data.projects.length);
+        return;
+      }
+
+      if (typeof data.total === "number") {
+        setProjectCount(data.total);
+        return;
+      }
+
+      setProjectCount(0);
+    } catch {
+      setProjectCount(0);
     }
+  }
 
-    if (!res.ok || !data.authenticated) {
-      showLogin();
-      setStatus("Ready to login.");
-      return;
+  async function logout() {
+    try {
+      await fetch(LOGOUT_URL, {
+        method: "POST",
+        headers: {
+          "Accept": "application/json"
+        },
+        cache: "no-store"
+      });
+    } catch (_) {}
+
+    redirectToLogin();
+  }
+
+  async function init() {
+    try {
+      const authData = await checkAuth();
+      setWelcome(authData.user);
+      await loadProjects();
+    } catch {
+      redirectToLogin();
     }
-
-    setUserUI(data.user || {});
-    showDashboard();
-    setStatus("Login verified.");
-  } catch (err) {
-    console.error("checkAuth error:", err);
-    showLogin();
-    setStatus("Unable to verify login right now.");
-  }
-}
-
-function loginWithGitHub() {
-  setStatus("Redirecting to GitHub...");
-  window.location.href = `${API_BASE}/auth/login`;
-}
-
-async function logout() {
-  try {
-    setStatus("Logging out...");
-    await apiFetch("/api/logout", {
-      method: "POST"
-    });
-  } catch (err) {
-    console.error("logout error:", err);
-  } finally {
-    showLogin();
-    clearQueryParams();
-    setStatus("Logged out.");
-    window.location.href = "/admin/";
-  }
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-  const error = getQueryError();
-
-  if (error) {
-    alert("Login failed: " + error);
-    clearQueryParams();
-  }
-
-  if (githubLoginBtn) {
-    githubLoginBtn.addEventListener("click", loginWithGitHub);
   }
 
   if (logoutBtn) {
     logoutBtn.addEventListener("click", logout);
   }
 
-  checkAuth();
-});
+  document.addEventListener("DOMContentLoaded", init);
+})();
