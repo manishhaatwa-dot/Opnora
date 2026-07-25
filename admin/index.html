@@ -2,499 +2,54 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Opnora Admin</title>
-  <link rel="icon" href="data:,">
-  <style>
-    :root {
-      --bg: #0b1020;
-      --bg-2: #121933;
-      --card: rgba(18, 25, 51, 0.92);
-      --card-2: rgba(255, 255, 255, 0.03);
-      --border: rgba(255, 255, 255, 0.08);
-      --text: #f5f7ff;
-      --muted: #a7b0cb;
-      --primary: #5b8cff;
-      --primary-hover: #4a7cf4;
-      --success: #1fc98a;
-      --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
-      --radius: 18px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      min-height: 100%;
-      font-family: Arial, sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(91, 140, 255, 0.18), transparent 30%),
-        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
-      color: var(--text);
-    }
-
-    body {
-      min-height: 100vh;
-    }
-
-    .page {
-      width: 100%;
-      min-height: 100vh;
-      padding: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .panel {
-      width: 100%;
-      max-width: 1100px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
-      overflow: hidden;
-    }
-
-    #loginSection {
-      display: flex;
-      min-height: 720px;
-    }
-
-    .login-left,
-    .login-right {
-      width: 50%;
-      padding: 48px;
-    }
-
-    .login-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      border-right: 1px solid var(--border);
-      background:
-        linear-gradient(160deg, rgba(91, 140, 255, 0.16), rgba(255,255,255,0.02)),
-        transparent;
-    }
-
-    .brand-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      width: fit-content;
-      padding: 8px 14px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 20px;
-      background: rgba(255,255,255,0.03);
-    }
-
-    .brand-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--primary);
-      box-shadow: 0 0 18px rgba(91, 140, 255, 0.8);
-    }
-
-    .login-left h1 {
-      font-size: 48px;
-      line-height: 1.1;
-      margin: 0 0 16px;
-      max-width: 8ch;
-    }
-
-    .login-left p {
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.7;
-      max-width: 48ch;
-      margin: 0;
-    }
-
-    .feature-list {
-      list-style: none;
-      padding: 0;
-      margin: 28px 0 0;
-      display: grid;
-      gap: 14px;
-    }
-
-    .feature-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .feature-list .check {
-      min-width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(31, 201, 138, 0.14);
-      color: var(--success);
-      font-size: 13px;
-      margin-top: 2px;
-    }
-
-    .login-right {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255,255,255,0.02);
-    }
-
-    .auth-card {
-      width: 100%;
-      max-width: 420px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 28px;
-    }
-
-    .auth-card h2 {
-      margin: 0 0 10px;
-      font-size: 28px;
-    }
-
-    .auth-card p {
-      margin: 0 0 22px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .btn {
-      width: 100%;
-      border: none;
-      border-radius: 14px;
-      padding: 14px 18px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-hover);
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.03);
-      color: var(--text);
-      border: 1px solid var(--border);
-      width: auto;
-      padding-inline: 16px;
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255,255,255,0.06);
-    }
-
-    .mini-note {
-      margin-top: 14px;
-      font-size: 13px;
-      color: var(--muted);
-      text-align: center;
-      line-height: 1.5;
-    }
-
-    #statusMsg {
-      margin-top: 16px;
-      min-height: 20px;
-      color: var(--muted);
-      font-size: 14px;
-      text-align: center;
-      line-height: 1.5;
-      word-break: break-word;
-    }
-
-    #dashboardSection {
-      display: none;
-      min-height: 720px;
-      padding: 28px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-    }
-
-    .topbar h1 {
-      margin: 0;
-      font-size: 30px;
-    }
-
-    .topbar p {
-      margin: 8px 0 0;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .hero-strip {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 18px;
-      margin-bottom: 18px;
-    }
-
-    .hero-card,
-    .side-card,
-    .stat-card {
-      background: var(--card-2);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-    }
-
-    .hero-card {
-      padding: 24px;
-    }
-
-    .hero-card h2 {
-      margin: 0 0 10px;
-      font-size: 28px;
-    }
-
-    .hero-card p {
-      color: var(--muted);
-      line-height: 1.7;
-      margin: 0 0 20px;
-      max-width: 58ch;
-    }
-
-    .tag-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .tag {
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.03);
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .side-card {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .side-card .label {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-
-    .side-card .value {
-      font-size: 38px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .side-card .sub {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-
-    .stat-card {
-      padding: 22px;
-    }
-
-    .stat-card .label {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-
-    .stat-card .value {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .stat-card .sub {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .footer-note {
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.7;
-      text-align: center;
-    }
-
-    @media (max-width: 920px) {
-      #loginSection {
-        flex-direction: column;
-      }
-
-      .login-left,
-      .login-right {
-        width: 100%;
-        padding: 30px 22px;
-      }
-
-      .login-left {
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-      }
-
-      .login-left h1 {
-        font-size: 34px;
-      }
-
-      .hero-strip,
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-
-      #dashboardSection {
-        padding: 20px;
-      }
-
-      .topbar h1 {
-        font-size: 24px;
-      }
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Opnora Admin Login</title>
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <main class="page">
-    <div class="panel">
-      <section id="loginSection">
-        <div class="login-left">
-          <div class="brand-badge">
-            <span class="brand-dot"></span>
-            <span>Opnora Admin Access</span>
-          </div>
+  <main class="login-page">
+    <section class="login-shell" aria-labelledby="admin-login-title">
+      <div class="login-brand">
+        <a href="./index.html" class="brand-mark" aria-label="Opnora Admin">
+          <span class="brand-mark__icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" role="img" aria-hidden="true">
+              <circle cx="24" cy="24" r="18"></circle>
+              <path d="M16 24c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8Z"></path>
+              <path d="M24 10v6M24 32v6M10 24h6M32 24h6"></path>
+            </svg>
+          </span>
+          <span class="brand-mark__text">
+            <span class="brand-mark__eyebrow">Opnora</span>
+            <span class="brand-mark__title">Admin</span>
+          </span>
+        </a>
+      </div>
 
-          <h1>Secure admin control panel.</h1>
-          <p>
-            GitHub login ke through admin dashboard access milega. Session backend-managed
-            secure cookie se handle hoga, isliye token browser storage me save nahi hoga.
+      <div class="login-card">
+        <div class="login-card__content">
+          <p class="login-card__eyebrow">Secure access</p>
+          <h1 id="admin-login-title">Sign in to Opnora Admin</h1>
+          <p class="login-card__description">
+            Continue with GitHub to manage projects, updates, and admin operations from one secure workspace.
           </p>
 
-          <ul class="feature-list">
-            <li><span class="check">✓</span><span>Persistent session flow with secure backend-controlled auth.</span></li>
-            <li><span class="check">✓</span><span>No localStorage ya sessionStorage token dependency.</span></li>
-            <li><span class="check">✓</span><span>Future changes aur control ke liye cleaner production setup.</span></li>
-          </ul>
-        </div>
-
-        <div class="login-right">
-          <div class="auth-card">
-            <h2>Welcome back</h2>
-            <p>Continue with GitHub to access Opnora admin dashboard.</p>
-
-            <button id="githubLogin" class="btn btn-primary" type="button">
-              Continue with GitHub
+          <div class="login-card__actions">
+            <button id="loginBtn" type="button" aria-describedby="loginStatus">
+              <span aria-hidden="true">
+                <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
+                  <path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.11.79-.25.79-.56v-2.17c-3.2.7-3.87-1.54-3.87-1.54-.52-1.32-1.28-1.67-1.28-1.67-1.04-.71.08-.69.08-.69 1.15.08 1.75 1.18 1.75 1.18 1.02 1.76 2.68 1.25 3.34.96.1-.74.4-1.25.72-1.54-2.56-.29-5.26-1.28-5.26-5.71 0-1.26.45-2.3 1.18-3.11-.12-.29-.51-1.47.11-3.06 0 0 .97-.31 3.19 1.19a11.1 11.1 0 0 1 5.81 0c2.21-1.5 3.18-1.19 3.18-1.19.63 1.59.24 2.77.12 3.06.74.81 1.18 1.85 1.18 3.11 0 4.44-2.7 5.41-5.28 5.7.41.36.78 1.09.78 2.2v3.26c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"></path>
+                </svg>
+              </span>
+              <span>Continue with GitHub</span>
             </button>
-
-            <div class="mini-note">
-              Agar login successful hoga to dashboard automatically open ho jayega.
-            </div>
-
-            <div id="statusMsg">Ready to login.</div>
           </div>
+
+          <p id="loginStatus" aria-live="polite">Checking login status...</p>
         </div>
-      </section>
-
-      <section id="dashboardSection">
-        <div class="topbar">
-          <div>
-            <h1>Welcome, Admin</h1>
-            <p>Authenticated control area for Opnora management.</p>
-          </div>
-          <button id="logoutBtn" class="btn btn-secondary" type="button">Logout</button>
-        </div>
-
-        <div class="hero-strip">
-          <div class="hero-card">
-            <h2>Admin overview</h2>
-            <p>
-              Ye dashboard ab cookie-based authentication flow par chalega, jisse login state
-              zyada stable rahegi aur frontend token handling ka issue khatam hoga.
-            </p>
-            <div class="tag-row">
-              <div class="tag">Cookie Session</div>
-              <div class="tag">GitHub OAuth</div>
-              <div class="tag">Cloudflare Worker</div>
-            </div>
-          </div>
-
-          <div class="side-card">
-            <div>
-              <div class="label">Projects</div>
-              <div id="projectCount" class="value">12</div>
-            </div>
-            <div class="sub">
-              Placeholder value abhi static hai; baad me real API se bind kar sakte ho.
-            </div>
-          </div>
-        </div>
-
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="label">Auth Mode</div>
-            <div class="value">HttpOnly Cookie</div>
-            <div class="sub">Frontend ko token read karne ki zaroorat nahi.</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="label">Storage Mode</div>
-            <div class="value">Server Controlled</div>
-            <div class="sub">Browser storage dependency remove ho gayi.</div>
-          </div>
-
-          <div class="stat-card">
-            <div class="label">Stability</div>
-            <div class="value">Production Ready</div>
-            <div class="sub">Login, refresh, logout flow cleaner aur future-safe.</div>
-          </div>
-        </div>
-
-        <div class="footer-note">
-          Dashboard UI currently static summary dikhata hai. Real data endpoints baad me isi structure me add kiye ja sakte hain.
-        </div>
-      </section>
-    </div>
+      </div>
+    </section>
   </main>
 
-  <script src="./script.js"></script>
+  <script src="./index.js"></script>
 </body>
 </html>
