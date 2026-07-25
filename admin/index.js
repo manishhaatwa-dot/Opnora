@@ -3,7 +3,7 @@
   const AUTH_URL = `${API_BASE}/api/check-auth`;
   const LOGIN_URL = `${API_BASE}/auth/login`;
 
-  const loginBtn = document.getElementById("loginBtn");
+  const loginBtn = document.getElementById("githubLogin");
   const loginStatus = document.getElementById("loginStatus");
 
   function setStatus(message) {
@@ -12,12 +12,12 @@
     }
   }
 
-  function goToDashboard() {
-    window.location.href = "./dashboard.html";
+  function redirectToDashboard() {
+    window.location.replace("./dashboard.html");
   }
 
-  function goToLogin() {
-    window.location.href = LOGIN_URL;
+  function redirectToLogin() {
+    window.location.replace(LOGIN_URL);
   }
 
   async function checkAuth() {
@@ -25,7 +25,7 @@
       method: "GET",
       credentials: "include",
       headers: {
-        "Accept": "application/json"
+        Accept: "application/json"
       },
       cache: "no-store"
     });
@@ -46,20 +46,24 @@
   async function init() {
     setStatus("Checking login status...");
 
-    const auth = await checkAuth();
+    try {
+      const auth = await checkAuth();
 
-    if (auth && auth.loggedIn === true) {
-      setStatus("Login detected. Redirecting...");
-      goToDashboard();
-      return;
+      if (auth && auth.loggedIn === true) {
+        setStatus("Login detected. Redirecting...");
+        redirectToDashboard();
+        return;
+      }
+
+      setStatus("Please sign in with GitHub to continue.");
+    } catch (error) {
+      setStatus("Unable to verify login. Please try again.");
     }
-
-    setStatus("Please login to continue.");
 
     if (loginBtn) {
       loginBtn.addEventListener("click", () => {
         setStatus("Redirecting to GitHub...");
-        goToLogin();
+        redirectToLogin();
       });
     }
   }
