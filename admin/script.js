@@ -1,245 +1,103 @@
-export default {
-  async fetch(request, env) {
-    return handleRequest(request, env);
-  },
-};
+const API_BASE = "https://opnora-admin-api.manishhaatwa.workers.dev";
 
-const FRONTEND_ORIGIN = "https://opnora.com";
-const FRONTEND_ADMIN_URL = "https://opnora.com/admin/";
-const API_ORIGIN = "https://opnora-admin-api.manishhaatwa.workers.dev";
+const githubLoginBtn = document.getElementById("githubLogin");
+const logoutBtn = document.getElementById("logoutBtn");
 
-function getCorsHeaders(origin) {
-  const allowedOrigin = origin === FRONTEND_ORIGIN ? origin : FRONTEND_ORIGIN;
-  return {
-    "Access-Control-Allow-Origin": allowedOrigin,
-    "Access-Control-Allow-Credentials": "true",
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Vary": "Origin",
-  };
-}
+const loginSection = document.getElementById("loginSection");
+const dashboardSection = document.getElementById("dashboardSection");
 
-function json(data, status = 200, origin = FRONTEND_ORIGIN, extraHeaders = {}) {
-  return new Response(JSON.stringify(data), {
-    status,
+const projectCount = document.getElementById("projectCount");
+const topbarTitle = document.querySelector(".topbar h1");
+
+async function apiFetch(path, options = {}) {
+  return fetch(`${API_BASE}${path}`, {
+    ...options,
+    credentials: "include",
     headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      ...getCorsHeaders(origin),
-      ...extraHeaders,
-    },
-  });
-}
-
-function redirect(url, headers = {}) {
-  return new Response(null, {
-    status: 302,
-    headers: {
-      Location: url,
-      ...headers,
-    },
-  });
-}
-
-function parseCookies(cookieHeader = "") {
-  const out = {};
-  cookieHeader.split(";").forEach(part => {
-    const i = part.indexOf("=");
-    if (i > -1) {
-      const key = part.slice(0, i).trim();
-      const value = part.slice(i + 1).trim();
-      out[key] = value;
+      "Content-Type": "application/json",
+      ...(options.headers || {})
     }
   });
-  return out;
 }
 
-function toBase64Url(str) {
-  return btoa(str).replace(/+/g, "-").replace(///g, "_").replace(/=+$/g, "");
+function showLogin() {
+  if (loginSection) loginSection.style.display = "flex";
+  if (dashboardSection) dashboardSection.style.display = "none";
 }
 
-function fromBase64Url(str) {
-  str = str.replace(/-/g, "+").replace(/_/g, "/");
-  while (str.length % 4) str += "=";
-  return atob(str);
+function showDashboard() {
+  if (loginSection) loginSection.style.display = "none";
+  if (dashboardSection) dashboardSection.style.display = "block";
 }
 
-async function signHmac(message, secret) {
-  const key = await crypto.subtle.importKey(
-    "raw",
-    new TextEncoder().encode(secret),
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"]
-  );
+function setUserUI(user) {
+  if (topbarTitle) {
+    const name = (user && (user.name || user.login)) ? (user.name || user.login) : "Admin";
+    topbarTitle.textContent = `Welcome, ${name}`;
+  }
 
-  const sig = await crypto.subtle.sign(
-    "HMAC",
-    key,
-    new TextEncoder().encode(message)
-  );
-
-  return btoa(String.fromCharCode(...new Uint8Array(sig)))
-    .replace(/+/g, "-")
-    .replace(///g, "_")
-    .replace(/=+$/g, "");
+  if (projectCount) {
+    projectCount.textContent = "12";
+  }
 }
 
-async function createSession(user, secret) {
-  const payload = {
-    sub: String(user.id),
-    login: user.login || "",
-    name: user.name || "",
-    avatar_url: user.avatar_url || "",
-    iat: Date.now(),
-    exp: Date.now() + 1000 * 60 * 60 * 24 * 7
-  };
-
-  const encodedPayload = toBase64Url(JSON.stringify(payload));
-  const signature = await signHmac(encodedPayload, secret);
-  return `${encodedPayload}.${signature}`;
+function getQueryError() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("error");
 }
 
-async function verifySession(sessionToken, secret) {
+function clearQueryParams() {
+  const cleanUrl = window.location.origin + window.location.pathname;
+  window.history.replaceState({}, document.title, cleanUrl);
+}
+
+async function checkAuth() {
   try {
-    if (!sessionToken || !sessionToken.includes(".")) return null;
+    const res = await apiFetch("/api/check-auth", { method: "GET" });
+    const data = await res.json();
 
-    const [encodedPayload, signature] = sessionToken.split(".");
-    const expectedSig = await signHmac(encodedPayload, secret);
-    if (signature !== expectedSig) return null;
-
-    const payload = JSON.parse(fromBase64Url(encodedPayload));
-    if (!payload.exp || Date.now() > payload.exp) return null;
-
-    return payload;
-  } catch {
-    return null;
-  }
-}
-
-async function getGitHubUser(accessToken) {
-  const res = await fetch("https://api.github.com/user", {
-    headers: {
-      "Authorization": `Bearer ${accessToken}`,
-      "Accept": "application/vnd.github+json",
-      "User-Agent": "opnora-admin"
-    }
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch GitHub user");
-  }
-
-  return res.json();
-}
-
-function buildSessionCookie(value, maxAgeSeconds = 60 * 60 * 24 * 7) {
-  return [
-    `__Host-opnora_session=${value}`,
-    "Path=/",
-    "Secure",
-    "HttpOnly",
-    "SameSite=Lax",
-    `Max-Age=${maxAgeSeconds}`
-  ].join("; ");
-}
-
-function buildClearSessionCookie() {
-  return [
-    "__Host-opnora_session=",
-    "Path=/",
-    "Secure",
-    "HttpOnly",
-    "SameSite=Lax",
-    "Max-Age=0"
-  ].join("; ");
-}
-
-async function handleRequest(request, env) {
-  const url = new URL(request.url);
-  const origin = request.headers.get("Origin") || FRONTEND_ORIGIN;
-
-  if (request.method === "OPTIONS") {
-    return new Response(null, {
-      status: 204,
-      headers: getCorsHeaders(origin),
-    });
-  }
-
-  if (url.pathname === "/auth/login") {
-    const githubUrl = new URL("https://github.com/login/oauth/authorize");
-    githubUrl.searchParams.set("client_id", env.GITHUB_CLIENT_ID);
-    githubUrl.searchParams.set("redirect_uri", `${API_ORIGIN}/auth/callback`);
-    githubUrl.searchParams.set("scope", "read:user user:email");
-    return redirect(githubUrl.toString());
-  }
-
-  if (url.pathname === "/auth/callback") {
-    try {
-      const code = url.searchParams.get("code");
-      if (!code) {
-        return redirect(`${FRONTEND_ADMIN_URL}?error=missing_code`);
-      }
-
-      const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
-        method: "POST",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          client_id: env.GITHUB_CLIENT_ID,
-          client_secret: env.GITHUB_CLIENT_SECRET,
-          code,
-          redirect_uri: `${API_ORIGIN}/auth/callback`,
-        }),
-      });
-
-      const tokenData = await tokenRes.json();
-
-      if (!tokenRes.ok || tokenData.error || !tokenData.access_token) {
-        return redirect(`${FRONTEND_ADMIN_URL}?error=oauth_token_failed`);
-      }
-
-      const githubUser = await getGitHubUser(tokenData.access_token);
-      const session = await createSession(githubUser, env.JWT_SECRET);
-
-      return redirect(FRONTEND_ADMIN_URL, {
-        "Set-Cookie": buildSessionCookie(session),
-      });
-    } catch {
-      return redirect(`${FRONTEND_ADMIN_URL}?error=oauth_callback_failed`);
-    }
-  }
-
-  if (url.pathname === "/api/check-auth") {
-    const cookies = parseCookies(request.headers.get("Cookie") || "");
-    const sessionToken = cookies["__Host-opnora_session"];
-    const payload = await verifySession(sessionToken, env.JWT_SECRET);
-
-    if (!payload) {
-      return json({ ok: false, authenticated: false }, 401, origin);
+    if (!res.ok || !data.authenticated) {
+      showLogin();
+      return;
     }
 
-    return json({
-      ok: true,
-      authenticated: true,
-      user: {
-        id: payload.sub,
-        login: payload.login,
-        name: payload.name,
-        avatar_url: payload.avatar_url,
-      }
-    }, 200, origin);
+    setUserUI(data.user);
+    showDashboard();
+  } catch (err) {
+    showLogin();
   }
-
-  if (url.pathname === "/api/logout" && request.method === "POST") {
-    return json(
-      { ok: true, message: "Logged out" },
-      200,
-      origin,
-      { "Set-Cookie": buildClearSessionCookie() }
-    );
-  }
-
-  return json({ ok: false, error: "Not found" }, 404, origin);
 }
+
+function loginWithGitHub() {
+  window.location.href = `${API_BASE}/auth/login`;
+}
+
+async function logout() {
+  try {
+    await apiFetch("/api/logout", { method: "POST" });
+  } catch (err) {
+  } finally {
+    showLogin();
+    clearQueryParams();
+    window.location.href = "/admin/";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const error = getQueryError();
+
+  if (error) {
+    alert("Login failed: " + error);
+    clearQueryParams();
+  }
+
+  if (githubLoginBtn) {
+    githubLoginBtn.addEventListener("click", loginWithGitHub);
+  }
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", logout);
+  }
+
+  checkAuth();
+});
