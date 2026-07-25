@@ -15,7 +15,6 @@ async function apiFetch(path, options = {}) {
     ...options,
     credentials: "include",
     headers: {
-      "Content-Type": "application/json",
       ...(options.headers || {})
     }
   });
@@ -37,7 +36,7 @@ function showDashboard() {
 
 function setUserUI(user) {
   if (topbarTitle) {
-    const name = (user && (user.name || user.login)) ? (user.name || user.login) : "Admin";
+    const name = user && (user.name || user.login) ? (user.name || user.login) : "Admin";
     topbarTitle.textContent = `Welcome, ${name}`;
   }
 
@@ -59,8 +58,17 @@ function clearQueryParams() {
 async function checkAuth() {
   try {
     setStatus("Checking login status...");
-    const res = await apiFetch("/api/check-auth", { method: "GET" });
-    const data = await res.json();
+
+    const res = await apiFetch("/api/check-auth", {
+      method: "GET"
+    });
+
+    let data = {};
+    try {
+      data = await res.json();
+    } catch (e) {
+      data = {};
+    }
 
     if (!res.ok || !data.authenticated) {
       showLogin();
@@ -68,9 +76,11 @@ async function checkAuth() {
       return;
     }
 
-    setUserUI(data.user);
+    setUserUI(data.user || {});
     showDashboard();
+    setStatus("Login verified.");
   } catch (err) {
+    console.error("checkAuth error:", err);
     showLogin();
     setStatus("Unable to verify login right now.");
   }
@@ -83,11 +93,16 @@ function loginWithGitHub() {
 
 async function logout() {
   try {
-    await apiFetch("/api/logout", { method: "POST" });
+    setStatus("Logging out...");
+    await apiFetch("/api/logout", {
+      method: "POST"
+    });
   } catch (err) {
+    console.error("logout error:", err);
   } finally {
     showLogin();
     clearQueryParams();
+    setStatus("Logged out.");
     window.location.href = "/admin/";
   }
 }
