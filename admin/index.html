@@ -5,312 +5,485 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Opnora Admin</title>
   <style>
-    * { box-sizing: border-box; }
-    body {
+    :root {
+      --bg: #0b1020;
+      --bg-2: #121933;
+      --card: rgba(18, 25, 51, 0.88);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f5f7ff;
+      --muted: #a7b0cb;
+      --primary: #5b8cff;
+      --primary-hover: #4a7cf4;
+      --danger: #ff6b7d;
+      --success: #1fc98a;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
       margin: 0;
+      padding: 0;
+      min-height: 100%;
       font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
+      background:
+        radial-gradient(circle at top right, rgba(91, 140, 255, 0.18), transparent 30%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      color: var(--text);
+    }
+
+    body {
       min-height: 100vh;
     }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 32px 20px;
-    }
-    .card {
-      background: #111827;
-      border: 1px solid #334155;
-      border-radius: 16px;
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
       padding: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .hidden { display: none; }
-    h1, h2 { margin-top: 0; color: #f8fafc; }
-    p { color: #94a3b8; line-height: 1.6; }
-    .btn {
-      display: inline-block;
-      padding: 12px 18px;
-      border-radius: 10px;
-      border: none;
-      font-size: 15px;
-      cursor: pointer;
+
+    .panel {
+      width: 100%;
+      max-width: 1080px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      overflow: hidden;
     }
-    .btn-primary { background: #2563eb; color: white; }
-    .btn-primary:hover { background: #1d4ed8; }
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid #475569;
-      color: #e2e8f0;
+
+    #loginSection {
+      display: flex;
+      min-height: 700px;
     }
-    .status {
-      margin-top: 16px;
-      padding: 12px 14px;
-      border-radius: 10px;
+
+    .login-left,
+    .login-right {
+      width: 50%;
+      padding: 48px;
+    }
+
+    .login-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-right: 1px solid var(--border);
+      background:
+        linear-gradient(160deg, rgba(91, 140, 255, 0.16), rgba(255,255,255,0.02)),
+        transparent;
+    }
+
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
       font-size: 14px;
-      border: 1px solid #334155;
-      background: #0b1220;
-      color: #cbd5e1;
-      word-break: break-word;
+      margin-bottom: 20px;
+      background: rgba(255,255,255,0.03);
     }
-    .status.success {
-      border-color: #14532d;
-      background: #052e16;
-      color: #bbf7d0;
+
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 18px rgba(91, 140, 255, 0.8);
     }
-    .status.error {
-      border-color: #7f1d1d;
-      background: #450a0a;
-      color: #fecaca;
+
+    .login-left h1 {
+      font-size: 48px;
+      line-height: 1.1;
+      margin: 0 0 16px;
+      max-width: 8ch;
     }
+
+    .login-left p {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+      max-width: 48ch;
+      margin: 0;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 28px 0 0;
+      display: grid;
+      gap: 14px;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .feature-list .check {
+      min-width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(31, 201, 138, 0.14);
+      color: var(--success);
+      font-size: 13px;
+      margin-top: 2px;
+    }
+
+    .login-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+    }
+
+    .auth-card h2 {
+      margin: 0 0 10px;
+      font-size: 28px;
+    }
+
+    .auth-card p {
+      margin: 0 0 22px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .btn {
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      border: 1px solid var(--border);
+      width: auto;
+      padding-inline: 16px;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.06);
+    }
+
+    .mini-note {
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    #dashboardSection {
+      display: none;
+      min-height: 700px;
+      padding: 28px;
+    }
+
     .topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
       margin-bottom: 24px;
       flex-wrap: wrap;
     }
-    .badge {
-      display: inline-block;
+
+    .topbar h1 {
+      margin: 0;
+      font-size: 30px;
+    }
+
+    .topbar p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .hero-strip {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .hero-card,
+    .side-card,
+    .stat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+    }
+
+    .hero-card {
+      padding: 24px;
+    }
+
+    .hero-card h2 {
+      margin: 0 0 10px;
+      font-size: 28px;
+    }
+
+    .hero-card p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0 0 20px;
+      max-width: 58ch;
+    }
+
+    .tag-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
       padding: 8px 12px;
       border-radius: 999px;
-      border: 1px solid #334155;
-      color: #cbd5e1;
-      font-size: 14px;
-      background: #0b1220;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-top: 20px;
-    }
-    .box {
-      background: #0b1220;
-      border: 1px solid #334155;
-      border-radius: 14px;
-      padding: 16px;
-    }
-    .label {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
       font-size: 13px;
-      color: #94a3b8;
+    }
+
+    .side-card {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .side-card .label {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .side-card .value {
+      font-size: 38px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .side-card .sub {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .stat-card {
+      padding: 22px;
+    }
+
+    .stat-card .label {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .stat-card .value {
+      font-size: 24px;
+      font-weight: 700;
       margin-bottom: 8px;
     }
-    .value {
-      font-size: 18px;
-      font-weight: bold;
-      color: #f8fafc;
-      word-break: break-word;
+
+    .stat-card .sub {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
     }
-    .small {
-      font-size: 13px;
-      color: #94a3b8;
-      margin-top: 8px;
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    @media (max-width: 920px) {
+      #loginSection {
+        flex-direction: column;
+      }
+
+      .login-left,
+      .login-right {
+        width: 100%;
+        padding: 30px 22px;
+      }
+
+      .login-left {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .login-left h1 {
+        font-size: 34px;
+      }
+
+      .hero-strip,
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #dashboardSection {
+        padding: 20px;
+      }
+
+      .topbar h1 {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div id="loginPage" class="card">
-      <h1>Opnora Admin Login</h1>
-      <p>Login with GitHub to open the admin dashboard.</p>
-      <button id="loginBtn" class="btn btn-primary">Login with GitHub</button>
-      <div id="loginStatus" class="status">Waiting for login.</div>
+  <main class="page">
+    <div class="panel">
+
+      <section id="loginSection">
+        <div class="login-left">
+          <div class="brand-badge">
+            <span class="brand-dot"></span>
+            <span>Opnora Admin Access</span>
+          </div>
+
+          <h1>Secure admin control panel.</h1>
+          <p>
+            GitHub login ke through admin dashboard access milega. Session backend-managed
+            secure cookie se handle hoga, isliye token browser storage me save nahi hoga.
+          </p>
+
+          <ul class="feature-list">
+            <li><span class="check">✓</span><span>Persistent session flow with secure backend-controlled auth.</span></li>
+            <li><span class="check">✓</span><span>No localStorage ya sessionStorage token dependency.</span></li>
+            <li><span class="check">✓</span><span>Future changes aur control ke liye cleaner production setup.</span></li>
+          </ul>
+        </div>
+
+        <div class="login-right">
+          <div class="auth-card">
+            <h2>Welcome back</h2>
+            <p>
+              Continue with GitHub to access Opnora admin dashboard.
+            </p>
+
+            <button id="githubLogin" class="btn btn-primary">Continue with GitHub</button>
+
+            <div class="mini-note">
+              Agar login successful hoga to dashboard automatically open ho jayega.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="dashboardSection">
+        <div class="topbar">
+          <div>
+            <h1>Welcome, Admin</h1>
+            <p>Authenticated control area for Opnora management.</p>
+          </div>
+          <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+        </div>
+
+        <div class="hero-strip">
+          <div class="hero-card">
+            <h2>Admin overview</h2>
+            <p>
+              Ye dashboard ab cookie-based authentication flow par chalega, jisse login state
+              zyada stable rahegi aur frontend token handling ka issue khatam hoga.
+            </p>
+            <div class="tag-row">
+              <div class="tag">Cookie Session</div>
+              <div class="tag">GitHub OAuth</div>
+              <div class="tag">Cloudflare Worker</div>
+            </div>
+          </div>
+
+          <div class="side-card">
+            <div>
+              <div class="label">Projects</div>
+              <div id="projectCount" class="value">12</div>
+            </div>
+            <div class="sub">
+              Placeholder value abhi static hai; baad me real API se bind kar sakte ho.
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="label">Auth Mode</div>
+            <div class="value">HttpOnly Cookie</div>
+            <div class="sub">Frontend ko token read karne ki zaroorat nahi.</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="label">Storage Mode</div>
+            <div class="value">Server Controlled</div>
+            <div class="sub">Browser storage dependency remove ho gayi.</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="label">Stability</div>
+            <div class="value">Production Ready</div>
+            <div class="sub">Login, refresh, logout flow cleaner aur future-safe.</div>
+          </div>
+        </div>
+
+        <div class="footer-note">
+          Dashboard UI currently static summary dikhata hai. Real data endpoints baad me isi structure me add kiye ja sakte hain.
+        </div>
+      </section>
+
     </div>
+  </main>
 
-    <div id="dashboardPage" class="card hidden">
-      <div class="topbar">
-        <div>
-          <h2 style="margin-bottom: 8px;">Admin Dashboard</h2>
-          <span id="userBadge" class="badge">User not loaded</span>
-        </div>
-        <button id="logoutBtn" class="btn btn-secondary">Logout</button>
-      </div>
-
-      <p>Login successful. Token is stored only for this tab session.</p>
-
-      <div class="grid">
-        <div class="box">
-          <div class="label">Authentication</div>
-          <div id="authState" class="value">Checking...</div>
-        </div>
-
-        <div class="box">
-          <div class="label">Storage mode</div>
-          <div class="value">sessionStorage</div>
-          <div class="small">Clears when tab session ends.</div>
-        </div>
-
-        <div class="box">
-          <div class="label">API</div>
-          <div class="value">workers.dev</div>
-          <div class="small">Bearer token based auth.</div>
-        </div>
-      </div>
-
-      <div id="dashboardStatus" class="status success">Authenticated.</div>
-    </div>
-  </div>
-
-  <script>
-    const API_BASE = "https://opnora-admin-api.manishhaatwa.workers.dev";
-    const TOKEN_KEY = "opnora_admin_token";
-
-    let authToken = null;
-    let authUser = null;
-
-    const loginPage = document.getElementById("loginPage");
-    const dashboardPage = document.getElementById("dashboardPage");
-    const loginBtn = document.getElementById("loginBtn");
-    const logoutBtn = document.getElementById("logoutBtn");
-    const loginStatus = document.getElementById("loginStatus");
-    const dashboardStatus = document.getElementById("dashboardStatus");
-    const authState = document.getElementById("authState");
-    const userBadge = document.getElementById("userBadge");
-
-    function showLoginPage() {
-      loginPage.classList.remove("hidden");
-      dashboardPage.classList.add("hidden");
-      authState.textContent = "Logged out";
-    }
-
-    function showDashboardPage(user) {
-      loginPage.classList.add("hidden");
-      dashboardPage.classList.remove("hidden");
-      authState.textContent = "Authenticated";
-      userBadge.textContent = user.name ? `${user.login} • ${user.name}` : user.login;
-    }
-
-    function setLoginStatus(message, type = "") {
-      loginStatus.textContent = message;
-      loginStatus.className = "status" + (type ? " " + type : "");
-    }
-
-    function setDashboardStatus(message, type = "success") {
-      dashboardStatus.textContent = message;
-      dashboardStatus.className = "status" + (type ? " " + type : "");
-    }
-
-    function saveToken(token) {
-      authToken = token;
-      sessionStorage.setItem(TOKEN_KEY, token);
-    }
-
-    function loadToken() {
-      if (authToken) return authToken;
-      const saved = sessionStorage.getItem(TOKEN_KEY);
-      if (saved) {
-        authToken = saved;
-        return saved;
-      }
-      return null;
-    }
-
-    function clearToken() {
-      authToken = null;
-      sessionStorage.removeItem(TOKEN_KEY);
-    }
-
-    function readTokenFromRedirect() {
-      const hash = window.location.hash.startsWith("#")
-        ? window.location.hash.slice(1)
-        : "";
-
-      const params = new URLSearchParams(hash);
-      const token = params.get("token");
-      const error = params.get("error");
-
-      if (token) {
-        saveToken(token);
-        history.replaceState(null, "", window.location.pathname + window.location.search);
-        return token;
-      }
-
-      if (error) {
-        history.replaceState(null, "", window.location.pathname + window.location.search);
-        setLoginStatus("OAuth failed: " + error, "error");
-      }
-
-      return null;
-    }
-
-    async function secureFetch(path, options = {}) {
-      const token = loadToken();
-
-      if (!token) {
-        throw new Error("Missing token");
-      }
-
-      const headers = new Headers(options.headers || {});
-      headers.set("Authorization", "Bearer " + token);
-
-      return fetch(API_BASE + path, {
-        ...options,
-        headers
-      });
-    }
-
-    async function checkAuth() {
-      const response = await secureFetch("/api/check-auth", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
-
-      const data = await response.json();
-
-      if (!response.ok || !data.ok) {
-        throw new Error(data.error || "Authentication failed");
-      }
-
-      authUser = data.user;
-      return data.user;
-    }
-
-    async function restoreSession() {
-      try {
-        const existingToken = loadToken();
-        if (!existingToken) {
-          showLoginPage();
-          setLoginStatus("Please click GitHub login.");
-          return;
-        }
-
-        setLoginStatus("Checking saved login...");
-        const user = await checkAuth();
-        showDashboardPage(user);
-        setDashboardStatus("Authenticated successfully. Dashboard opened automatically.", "success");
-      } catch (err) {
-        clearToken();
-        authUser = null;
-        showLoginPage();
-        setLoginStatus(err.message || "Login failed", "error");
-      }
-    }
-
-    function startLogin() {
-      window.location.href = API_BASE + "/auth/login";
-    }
-
-    function logout() {
-      clearToken();
-      authUser = null;
-      showLoginPage();
-      setLoginStatus("Logged out. Token cleared from this tab session.", "success");
-    }
-
-    loginBtn.addEventListener("click", startLogin);
-    logoutBtn.addEventListener("click", logout);
-
-    async function init() {
-      showLoginPage();
-      readTokenFromRedirect();
-      await restoreSession();
-    }
-
-    init();
-  </script>
+  <script src="./script.js"></script>
 </body>
 </html>
