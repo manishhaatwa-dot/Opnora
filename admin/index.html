@@ -2,53 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Opnora Admin Login</title>
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <main class="login-page">
-    <section class="login-shell" aria-labelledby="admin-login-title">
-      <div class="login-brand">
-        <a href="./index.html" class="brand-mark" aria-label="Opnora Admin">
-          <span class="brand-mark__icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" role="img" aria-hidden="true">
-              <circle cx="24" cy="24" r="18"></circle>
-              <path d="M16 24c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8Z"></path>
-              <path d="M24 10v6M24 32v6M10 24h6M32 24h6"></path>
-            </svg>
-          </span>
-          <span class="brand-mark__text">
-            <span class="brand-mark__eyebrow">Opnora</span>
-            <span class="brand-mark__title">Admin</span>
-          </span>
-        </a>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="logo">
+        <h2>Opnora</h2>
+        <p>Admin Panel</p>
       </div>
-
-      <div class="login-card">
-        <div class="login-card__content">
-          <p class="login-card__eyebrow">Secure access</p>
-          <h1 id="admin-login-title">Sign in to Opnora Admin</h1>
-          <p class="login-card__description">
-            Continue with GitHub to manage projects, updates, and admin operations from one secure workspace.
-          </p>
-
-          <div class="login-card__actions">
-            <button id="loginBtn" type="button" aria-describedby="loginStatus">
-              <span aria-hidden="true">
-                <svg viewBox="0 0 24 24" role="img" aria-hidden="true">
-                  <path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.11.79-.25.79-.56v-2.17c-3.2.7-3.87-1.54-3.87-1.54-.52-1.32-1.28-1.67-1.28-1.67-1.04-.71.08-.69.08-.69 1.15.08 1.75 1.18 1.75 1.18 1.02 1.76 2.68 1.25 3.34.96.1-.74.4-1.25.72-1.54-2.56-.29-5.26-1.28-5.26-5.71 0-1.26.45-2.3 1.18-3.11-.12-.29-.51-1.47.11-3.06 0 0 .97-.31 3.19 1.19a11.1 11.1 0 0 1 5.81 0c2.21-1.5 3.18-1.19 3.18-1.19.63 1.59.24 2.77.12 3.06.74.81 1.18 1.85 1.18 3.11 0 4.44-2.7 5.41-5.28 5.7.41.36.78 1.09.78 2.2v3.26c0 .31.21.68.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"></path>
-                </svg>
-              </span>
-              <span>Continue with GitHub</span>
-            </button>
-          </div>
-
-          <p id="loginStatus" aria-live="polite">Checking login status...</p>
-        </div>
-      </div>
-    </section>
-  </main>
+      <h1>Admin Login</h1>
+      <p>Sign in with GitHub to continue to the dashboard.</p>
+      <button id="githubLogin" type="button">Continue with GitHub</button>
+      <p id="loginStatus" aria-live="polite"></p>
+    </div>
+  </div>
 
   <script src="./index.js"></script>
 </body>
