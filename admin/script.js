@@ -28,6 +28,7 @@
   async function checkAuth() {
     const response = await fetch(AUTH_URL, {
       method: "GET",
+      credentials: "include",
       headers: {
         "Accept": "application/json"
       },
@@ -89,6 +90,7 @@
     try {
       await fetch(LOGOUT_URL, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Accept": "application/json"
         },
