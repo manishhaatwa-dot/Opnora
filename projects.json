@@ -20,11 +20,19 @@
     "link": "https://appcreatorpali.xtureai.com",
     "button": "Visit Website"
   },
- {
-  "title": "Founder & CEO",
-  "description": "Founder of XtureAI & Opnora | AI Solutions | Website & Mobile App Developer",
-  "image": "images/CEO.jpeg",
-  "link": "https://www.linkedin.com/in/manish-haatwa-402114294",
-  "button": "Connect on LinkedIn"
-}
+  {
+    "title": "Founder & CEO",
+    "description": "Founder of XtureAI & Opnora | AI Solutions | Website & Mobile App Developer",
+    "image": "images/CEO.jpeg",
+    "link": "https://www.linkedin.com/in/manish-haatwa-402114294",
+    "button": "Connect on LinkedIn"
+  },
+  {
+    "title": "medical.opnora.com",
+    "description": "med",
+    "image": "images/1785013321929_7a68c4363c08cec48f32cb8315ca19b6.jpg",
+    "link": "https://medical.opnora.com",
+    "category": "Website",
+    "button": "Visit Website"
+  }
 ]
