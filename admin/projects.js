@@ -55,14 +55,12 @@ async function loadProjects(){
     currentProjects = Array.isArray(data)
         ? data
         : (data.projects || []);
-
-}
-
+    }
 function renderProjects(){
 
-    if(currentProjects.length===0){
+    if(currentProjects.length === 0){
 
-        table.innerHTML=`
+        table.innerHTML = `
         <tr>
             <td colspan="4" align="center">
                 No Projects Found
@@ -73,21 +71,20 @@ function renderProjects(){
 
     }
 
-    table.innerHTML="";
+    table.innerHTML = "";
 
     currentProjects.forEach((project,index)=>{
 
-        table.innerHTML += `
+        const status = project.live ? "Live" : "Draft";
 
+        table.innerHTML += `
 <tr>
 
 <td>${project.title || "-"}</td>
 
 <td>${project.category || "-"}</td>
 
-<td align="center">
-${project.live ? "Live" : "Draft"}
-</td>
+<td align="center">${status}</td>
 
 <td align="center">
 
@@ -102,7 +99,6 @@ Delete
 </td>
 
 </tr>
-
 `;
 
     });
@@ -111,7 +107,7 @@ Delete
 
         btn.addEventListener("click",()=>{
 
-            location.href=`edit-project.html?id=${btn.dataset.index}`;
+            location.href = "edit-project.html?id=" + btn.dataset.index;
 
         });
 
@@ -150,15 +146,18 @@ async function deleteProject(index){
             body:JSON.stringify(currentProjects)
         });
 
-        const data = await response.json();
+        const result = await response.json();
 
-        if(!response.ok || !data.success){
-            throw new Error(data.error || "Delete failed");
+        if(!response.ok || !result.success){
+
+            throw new Error(result.error || "Delete failed");
+
         }
 
         alert("Project deleted successfully.");
 
         await loadProjects();
+
         renderProjects();
 
     }catch(error){
@@ -170,7 +169,8 @@ async function deleteProject(index){
     }
 
 }
-    if(logoutBtn){
+
+if(logoutBtn){
 
     logoutBtn.addEventListener("click",()=>{
 
@@ -186,30 +186,31 @@ document.addEventListener("DOMContentLoaded",async()=>{
 
         const ok = await checkAuth();
 
-        if(ok){
-
-            await loadProjects();
-
-            renderProjects();
-
+        if(!ok){
+            return;
         }
+
+        await loadProjects();
+
+        renderProjects();
 
     }catch(error){
 
         console.error(error);
 
         table.innerHTML = `
-        <tr>
-            <td colspan="4" align="center">
-                Unable to load projects.
-            </td>
-        </tr>`;
+<tr>
+<td colspan="4" align="center">
+Unable to load projects.
+</td>
+</tr>`;
 
     }
 
 });
 
 })();
+
 
 
  
