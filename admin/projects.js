@@ -32,39 +32,46 @@ async function checkAuth() {
 
     return true;
 }
-async function deleteProject(index){
+async function deleteProject(index) {
 
     const confirmDelete = confirm("Are you sure you want to delete this project?");
 
-    if(!confirmDelete){
-        return;
-    }
+    if (!confirmDelete) return;
 
-    try{
+    try {
 
-        currentProjects.splice(index,1);
+        currentProjects.splice(index, 1);
 
-        const response = await fetch(PROJECTS_API,{
-
-            method:"POST",
-
-            credentials:"include",
-
-            headers:{
-                "Content-Type":"application/json"
+        const response = await fetch(PROJECTS_API, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
             },
-
-            body:JSON.stringify(currentProjects)
-
+            body: JSON.stringify(currentProjects)
         });
 
         const data = await response.json();
 
-        if(!response.ok || !data.success){
-
+        if (!response.ok || !data.success) {
             throw new Error(data.error || "Delete failed");
-
         }
+
+        alert("Project deleted successfully.");
+
+        window.location.reload();
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(error.message || "Delete failed.");
+
+    }
+
+}
+
+window.deleteProject = deleteProject;
 
         alert("Project deleted successfully.");
 
