@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects - Opnora Admin</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+  <div class="sidebar">
+
+    <div class="logo">
+      <i class="fa-solid fa-layer-group"></i>
+      <h2>Opnora</h2>
+      <p>Admin Panel</p>
+    </div>
+
+    <ul>
+      <li onclick="location.href='dashboard.html'">
+        <i class="fa-solid fa-chart-line"></i>
+        Dashboard
+      </li>
+
+      <li class="active">
+        <i class="fa-solid fa-folder-open"></i>
+        Projects
+      </li>
+
+      <li onclick="location.href='add-project.html'">
+        <i class="fa-solid fa-plus"></i>
+        Add Project
+      </li>
+
+      <li>
+        <i class="fa-solid fa-gear"></i>
+        Settings
+      </li>
+
+      <li id="logoutBtn">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        Logout
+      </li>
+    </ul>
+
+  </div>
+
+  <div class="main-content">
+
+    <div class="topbar">
+      <h1>Projects</h1>
+      <p>Manage all website projects.</p>
+    </div>
+
+    <div class="cards">
+
+      <div class="card">
+
+        <h2 style="margin-bottom:20px;">Project List</h2>
+
+        <table width="100%" style="color:white;border-collapse:collapse;">
+
+          <thead>
+
+            <tr>
+              <th align="left">Project</th>
+              <th align="left">Category</th>
+              <th align="center">Status</th>
+              <th align="center">Action</th>
+            </tr>
+
+          </thead>
+
+          <tbody id="projectsTable">
+
+            <tr>
+
+              <td colspan="4" align="center" style="padding:30px;color:#cbd5e1;">
+                Loading Projects...
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script src="projects.js"></script>
+
+</body>
+</html>
