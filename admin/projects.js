@@ -4,9 +4,12 @@ const API_BASE = "https://opnora-admin-api.manishhaatwa.workers.dev";
 
 const AUTH_URL = `${API_BASE}/api/check-auth`;
 const PROJECTS_URL = "/projects.json";
-
+const PROJECTS_API=`${API_BASE}/api/projects`;
+    
 const table = document.getElementById("projectsTable");
 const logoutBtn = document.getElementById("logoutBtn");
+
+    let currentProjects = [];
 
 async function checkAuth() {
 
@@ -29,7 +32,51 @@ async function checkAuth() {
 
     return true;
 }
+async function deleteProject(index){
 
+    const confirmDelete = confirm("Are you sure you want to delete this project?");
+
+    if(!confirmDelete){
+        return;
+    }
+
+    try{
+
+        currentProjects.splice(index,1);
+
+        const response = await fetch(PROJECTS_API,{
+
+            method:"POST",
+
+            credentials:"include",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify(currentProjects)
+
+        });
+
+        const data = await response.json();
+
+        if(!response.ok || !data.success){
+
+            throw new Error(data.error || "Delete failed");
+
+        }
+
+        alert("Project deleted successfully.");
+
+        loadProjects();
+
+    }catch(error){
+
+        alert(error.message);
+
+    }
+
+}
 async function loadProjects() {
 
     try {
@@ -50,9 +97,11 @@ async function loadProjects() {
 
         const data = await res.json();
 
-        const projects = Array.isArray(data)
-            ? data
-            : (data.projects || []);
+        currentProjects = Array.isArray(data)
+    ? data
+    : (data.projects || []);
+
+const projects = currentProjects;
 
         if (projects.length === 0) {
 
@@ -88,7 +137,7 @@ ${project.live ? "Live" : "Draft"}
 Edit
 </button>
 
-<button onclick="alert('Delete feature coming next')">
+<button onclick="deleteProject(${index})">
 Delete
 </button>
 
