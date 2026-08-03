@@ -34,5 +34,13 @@
     "link": "https://PaliTextile.opnora.com",
     "category": "Website",
     "button": "Visit Website"
+  },
+  {
+    "title": "medical",
+    "description": "demo web for medical business.",
+    "image": "images/1785766790453_medical.png",
+    "link": "https://medical.opnora.com",
+    "category": "Website",
+    "button": "Visit Website"
   }
 ]
