@@ -26,5 +26,13 @@
     "image": "images/CEO.jpeg",
     "link": "https://www.linkedin.com/in/manish-haatwa-402114294",
     "button": "Connect on LinkedIn"
+  },
+  {
+    "title": "PaliTextile",
+    "description": "demo web for pali textile industry.",
+    "image": "images/1785765945182_textile.jpg",
+    "link": "https://PaliTextile.opnora.com",
+    "category": "Website",
+    "button": "Visit Website"
   }
 ]
