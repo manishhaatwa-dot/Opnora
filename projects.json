@@ -58,5 +58,13 @@
     "link": "https://libmanage.opnora.com",
     "category": "Website",
     "button": "Visit Website"
+  },
+  {
+    "title": "libcontrol",
+    "description": "Full working library control web&app with email log in. Whatspp us  for more information",
+    "image": "images/1787224048929_1000925753.jpg",
+    "link": "https://libcontrol.opnora.com",
+    "category": "Website",
+    "button": "Visit Website"
   }
 ]
