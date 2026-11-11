@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn how to delete locally stored data from the Aegis Voice safety application.">
+    <title>Data Deletion - Aegis Voice</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #07111f;
+            color: #f3f7ff;
+            line-height: 1.7;
+        }
+
+        header {
+            background: #101f32;
+            padding: 38px 20px;
+            text-align: center;
+            border-bottom: 1px solid #263b52;
+        }
+
+        header h1 {
+            color: #56f0e5;
+            font-size: 30px;
+            letter-spacing: 2px;
+            margin: 0;
+        }
+
+        header p {
+            color: #94a8c2;
+            margin-bottom: 0;
+        }
+
+        main {
+            max-width: 850px;
+            margin: 35px auto;
+            padding: 0 20px 40px;
+        }
+
+        section {
+            background: #101f32;
+            border: 1px solid #263b52;
+            border-radius: 14px;
+            padding: 22px;
+            margin-bottom: 18px;
+        }
+
+        h2 {
+            color: #56f0e5;
+            font-size: 19px;
+            margin-top: 0;
+        }
+
+        p, li {
+            color: #d0dbea;
+            font-size: 14px;
+        }
+
+        .warning {
+            border-left: 4px solid #ff4f81;
+            background: #251729;
+        }
+
+        .steps {
+            counter-reset: step;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .steps li {
+            counter-increment: step;
+            margin-bottom: 14px;
+        }
+
+        .steps li::before {
+            content: counter(step) ". ";
+            color: #56f0e5;
+            font-weight: bold;
+        }
+
+        a {
+            color: #36b9ff;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #36b9ff;
+            color: #07111f;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        footer {
+            background: #101f32;
+            color: #94a8c2;
+            text-align: center;
+            padding: 25px 15px;
+            font-size: 12px;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 24px;
+            }
+
+            section {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>AEGIS VOICE</h1>
+    <p>Data Deletion Instructions</p>
+</header>
+
+<main>
+
+    <section>
+        <h2>1. About Data Deletion</h2>
+
+        <p>
+            Aegis Voice provides an in-app Data Deletion feature
+            that allows users to remove supported information
+            stored locally by the application on their device.
+        </p>
+
+        <p>
+            Users do not need to contact the developer to use
+            this in-app local data deletion feature.
+        </p>
+    </section>
+
+    <section>
+        <h2>2. How to Delete Your Data</h2>
+
+        <p>Follow these steps inside the Aegis Voice application:</p>
+
+        <ol class="steps">
+            <li>Open the Aegis Voice application.</li>
+            <li>Scroll to the bottom of the main screen.</li>
+            <li>Tap the <strong>Data Deletion</strong> option.</li>
+            <li>Review the information about data deletion.</li>
+            <li>Tap <strong>Delete All Local Data</strong>.</li>
+            <li>Read the confirmation message carefully.</li>
+            <li>Tap <strong>Yes, Delete</strong> to confirm.</li>
+        </ol>
+
+        <p>
+            The application will stop voice monitoring before
+            starting the supported local deletion process.
+            If an emergency SOS operation is active, deletion
+            is blocked until the SOS operation finishes.
+        </p>
+    </section>
+
+    <section>
+        <h2>3. Information Deleted by the Feature</h2>
+
+        <p>The in-app Data Deletion feature is designed to remove:</p>
+
+        <ul>
+            <li>Saved emergency contact information.</li>
+            <li>Saved voice trigger phrases.</li>
+            <li>Associated voice recordings covered by the deletion feature.</li>
+            <li>Cached GPS location information.</li>
+            <li>The locally copied voice model file (bpe.model).</li>
+        </ul>
+    </section>
+
+    <section class="warning">
+        <h2>4. Important Information</h2>
+
+        <p>
+            The Data Deletion feature removes supported local
+            application data. It does not delete:
+        </p>
+
+        <ul>
+            <li>SMS messages already sent to emergency contacts.</li>
+            <li>Phone call history.</li>
+            <li>Android permissions granted to the application.</li>
+            <li>Information stored outside the application's local storage.</li>
+            <li>Files or information stored independently by other applications.</li>
+        </ul>
+
+        <p>
+            Deletion is permanent for the supported data successfully
+            removed by the feature and cannot be undone.
+        </p>
+    </section>
+
+    <section>
+        <h2>5. Deletion Errors</h2>
+
+        <p>
+            If the application cannot stop voice monitoring or
+            encounters an error while deleting local data, it may
+            cancel or report an incomplete deletion.
+        </p>
+
+        <p>
+            If deletion does not complete, try again after voice
+            monitoring has stopped and any active emergency SOS
+            operation has finished.
+        </p>
+    </section>
+
+    <section>
+        <h2>6. Contact for Assistance</h2>
+
+        <p>
+            If you need help with the Data Deletion feature,
+            contact the Aegis Voice developer:
+        </p>
+
+        <p>
+            <strong>Developer:</strong> Manish Prajapat<br>
+            <strong>Organization:</strong> EKALAVYU STARTUP<br>
+            <strong>Website:</strong>
+            <a href="https://opnora.com">https://opnora.com</a><br>
+            <strong>Email:</strong> YOUR_SUPPORT_EMAIL
+        </p>
+
+        <a class="button" href="https://opnora.com">
+            Visit Opnora
+        </a>
+    </section>
+
+    <section>
+        <h2>7. Privacy Policy</h2>
+
+        <p>
+            To learn more about the information accessed and
+            handled by Aegis Voice, read our Privacy Policy.
+        </p>
+
+        <a href="https://opnora.com/aegis-voice/privacy-policy.html">
+            View Aegis Voice Privacy Policy
+        </a>
+    </section>
+
+</main>
+
+<footer>
+    AEGIS VOICE • SAFETY BY DESIGN<br>
+    Powered by EKALAVYU STARTUP<br>
+    Created by Manish Prajapat<br>
+    © 2026 EKALAVYU STARTUP. All Rights Reserved.
+</footer>
+
+</body>
+</html>
