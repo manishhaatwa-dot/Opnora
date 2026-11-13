@@ -3,322 +3,418 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Privacy Policy for Aegis Voice personal safety application.">
-    <title>Privacy Policy - Aegis Voice</title>
-
+    <meta name="description" content="Privacy Policy for Aegis Voice, a voice-activated emergency safety application by EKALAVYU STARTUP. Learn how your data is handled, stored, and protected.">
+    <title>Privacy Policy | Aegis Voice</title>
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #07111f;
-            color: #f3f7ff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #07111F;
+            color: #1a1a1a;
             line-height: 1.7;
         }
 
-        header {
-            background: #101f32;
-            padding: 35px 20px;
+        .header {
+            background: linear-gradient(135deg, #07111F 0%, #101F32 100%);
+            color: #F3F7FF;
+            padding: 48px 20px;
             text-align: center;
-            border-bottom: 1px solid #263b52;
         }
 
-        header h1 {
-            margin: 0;
-            color: #56f0e5;
-            font-size: 30px;
+        .header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #56F0E5;
+            font-size: 14px;
             letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
-        header p {
-            color: #94a8c2;
-            margin-bottom: 0;
+        .header .org {
+            color: #94A8C2;
+            font-size: 13px;
+            margin-top: 12px;
         }
 
-        main {
-            max-width: 850px;
-            margin: 35px auto;
-            padding: 0 20px 40px;
-        }
-
-        section {
-            background: #101f32;
-            padding: 22px;
-            margin-bottom: 18px;
-            border-radius: 14px;
-            border: 1px solid #263b52;
+        .container {
+            max-width: 800px;
+            margin: -24px auto 0;
+            background: #ffffff;
+            border-radius: 16px 16px 0 0;
+            padding: 40px 28px;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
         }
 
         h2 {
-            color: #56f0e5;
-            font-size: 19px;
-            margin-top: 0;
+            color: #07111F;
+            font-size: 22px;
+            font-weight: 700;
+            margin-top: 36px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #36B9FF;
         }
 
-        p, li {
-            color: #d0dbea;
+        h3 {
+            color: #101F32;
+            font-size: 17px;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 14px;
+            color: #333;
+            font-size: 15px;
+        }
+
+        ul {
+            margin: 12px 0 16px 24px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .highlight-box {
+            background: #f0f7ff;
+            border-left: 4px solid #36B9FF;
+            padding: 16px 18px;
+            border-radius: 8px;
+            margin: 18px 0;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
             font-size: 14px;
         }
 
+        .warning-box {
+            background: #fff5f5;
+            border-left: 4px solid #FF4F81;
+            padding: 16px 18px;
+            border-radius: 8px;
+            margin: 18px 0;
+        }
+
+        .warning-box p {
+            margin-bottom: 0;
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 14px;
+        }
+
+        th, td {
+            border: 1px solid #d0d7e2;
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #07111F;
+            color: #F3F7FF;
+            font-weight: 600;
+        }
+
+        td {
+            color: #333;
+        }
+
         a {
-            color: #36b9ff;
+            color: #36B9FF;
+            text-decoration: none;
         }
 
-        footer {
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            background: #07111F;
+            color: #94A8C2;
             text-align: center;
-            padding: 25px 15px;
-            background: #101f32;
-            color: #94a8c2;
-            font-size: 12px;
+            padding: 24px 20px;
+            font-size: 13px;
         }
 
-        .updated {
-            color: #56f0e5;
-            font-size: 13px;
+        .footer .brand {
+            color: #56F0E5;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 24px;
+            }
+            .container {
+                padding: 28px 18px;
+            }
+            h2 {
+                font-size: 19px;
+            }
+            h3 {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
-
 <body>
 
-<header>
-    <h1>AEGIS VOICE</h1>
-    <p>Privacy Policy</p>
-    <p class="updated">Last Updated: November 11, 2026</p>
-</header>
+    <div class="header">
+        <h1>AEGIS VOICE</h1>
+        <p>YOUR VOICE. YOUR SHIELD.</p>
+        <div class="org">Privacy Policy &nbsp;•&nbsp; EKALAVYU STARTUP</div>
+    </div>
 
-<main>
+    <div class="container">
 
-    <section>
+        <p><strong>Last Updated:</strong> November 13, 2026</p>
+
         <h2>1. Introduction</h2>
-        <p>
-            Aegis Voice is a personal safety application developed by
-            EKALAVYU STARTUP. The application is designed to provide
-            safety-related features such as voice monitoring, emergency
-            contacts, location access and emergency communication.
-        </p>
-        <p>
-            This Privacy Policy explains what information the application
-            may access, how it is used and how users can manage their
-            locally stored information.
-        </p>
-    </section>
+        <p>Aegis Voice is a voice-activated emergency safety application developed and operated by EKALAVYU STARTUP. This Privacy Policy explains how the Aegis Voice mobile application ("the App", "we", "us") handles information when you use its safety, monitoring, and emergency features.</p>
+        <p>By using Aegis Voice, you agree to the practices described in this Privacy Policy. If you do not agree, please do not use the App.</p>
 
-    <section>
-        <h2>2. Information and Permissions</h2>
-        <p>
-            Depending on the features enabled by the user, Aegis Voice
-            may request access to the following:
-        </p>
+        <h2>2. Information and Permissions Used</h2>
+        <p>Aegis Voice requests Android permissions only when they are required for a specific safety or emergency feature. The App does not collect, upload, or store your personal data on a developer-operated server.</p>
 
+        <table>
+            <tr>
+                <th>Permission</th>
+                <th>Purpose</th>
+            </tr>
+            <tr>
+                <td><strong>RECORD_AUDIO</strong></td>
+                <td>Used for Secret Word voice monitoring and voice-trigger detection while monitoring is active.</td>
+            </tr>
+            <tr>
+                <td><strong>ACCESS_COARSE_LOCATION</strong></td>
+                <td>Used to obtain an approximate device location for emergency location features.</td>
+            </tr>
+            <tr>
+                <td><strong>ACCESS_FINE_LOCATION</strong></td>
+                <td>Used to obtain a precise device location for emergency location features and location links.</td>
+            </tr>
+            <tr>
+                <td><strong>ACCESS_BACKGROUND_LOCATION</strong></td>
+                <td>Used when emergency monitoring is active and the App needs location access while running in the background.</td>
+            </tr>
+            <tr>
+                <td><strong>FOREGROUND_SERVICE_MICROPHONE</strong></td>
+                <td>Enables the foreground voice-monitoring service to use the microphone while monitoring is active.</td>
+            </tr>
+            <tr>
+                <td><strong>FOREGROUND_SERVICE_LOCATION</strong></td>
+                <td>Enables the foreground service to access location-related emergency functionality.</td>
+            </tr>
+            <tr>
+                <td><strong>SEND_SMS</strong></td>
+                <td>Used to send emergency SOS messages to your saved emergency contacts, manually or automatically after an emergency trigger.</td>
+            </tr>
+            <tr>
+                <td><strong>CALL_PHONE</strong></td>
+                <td>Used to place an emergency call to your first saved emergency contact.</td>
+            </tr>
+            <tr>
+                <td><strong>READ_PHONE_STATE</strong></td>
+                <td>Used to check SIM and calling-account availability for emergency call and SMS features.</td>
+            </tr>
+            <tr>
+                <td><strong>POST_NOTIFICATIONS</strong></td>
+                <td>Used to show monitoring status, foreground-service activity, and important emergency updates.</td>
+            </tr>
+        </table>
+
+        <h2>3. Microphone and Voice Monitoring</h2>
+        <p>When you turn monitoring ON, Aegis Voice uses your device microphone to listen for a Secret Word that you have configured in the App.</p>
         <ul>
-            <li>
-                <strong>Microphone:</strong>
-                Used for voice monitoring and voice-trigger-related
-                functionality when enabled.
-            </li>
+            <li>Monitoring runs through an Android foreground service.</li>
+            <li>While monitoring is active, Android displays a persistent notification so you can see that the service is running.</li>
+            <li>The purpose of background monitoring is Secret Word detection, not continuous audio recording.</li>
+            <li>Secret Word detection is performed through the App's voice-trigger functionality.</li>
+            <li>Background microphone audio is not uploaded to the developer's server.</li>
+        </ul>
+        <div class="highlight-box">
+            <p>Monitoring must remain ON for Secret Word detection to work. If monitoring is stopped, or Android or your device restricts or stops the service, Secret Word detection will not work during that time.</p>
+        </div>
 
-            <li>
-                <strong>Location:</strong>
-                Used to obtain the device's location for emergency
-                location information.
-            </li>
-
-            <li>
-                <strong>SMS:</strong>
-                Used to send emergency messages to contacts selected
-                by the user.
-            </li>
-
-            <li>
-                <strong>Phone / Call:</strong>
-                Used for emergency calling functionality.
-            </li>
-
-            <li>
-                <strong>Phone State:</strong>
-                May be requested for phone-related functionality.
-            </li>
+        <h2>4. Custom Voice Phrases / Samples</h2>
+        <p>You may create and save custom Secret Words in the App. Depending on the feature you use, the App may store voice-trigger settings and associated voice samples locally on your device.</p>
+        <ul>
+            <li>Saved Secret Words and associated recordings are stored in the App's private local storage.</li>
+            <li>These recordings are not uploaded to a developer-operated server.</li>
+            <li>You can edit or delete saved Secret Words and recordings from the Secret Word Manager.</li>
         </ul>
 
-        <p>
-            Permissions are requested according to the features being
-            used. Users can manage permissions through Android settings.
-        </p>
-    </section>
+        <h2>5. Automatic Emergency Response</h2>
+        <p>When a configured Secret Word is detected while monitoring is active, Aegis Voice may start an automatic emergency response without requiring you to touch the phone.</p>
 
-    <section>
-        <h2>3. Emergency Contacts</h2>
-        <p>
-            Users can save emergency contact names and phone numbers
-            within the application.
-        </p>
-        <p>
-            These contacts are stored locally on the device and are
-            used for emergency communication initiated through the app.
-        </p>
-        <p>
-            When an emergency SMS is sent, the message and any included
-            location information are shared with the selected recipients
-            through the device's SMS service.
-        </p>
-    </section>
-
-    <section>
-        <h2>4. Location Information</h2>
-        <p>
-            If location permission is granted, Aegis Voice may access
-            the device's location to provide emergency location
-            information.
-        </p>
-        <p>
-            Location information may be displayed in the application
-            and included in an emergency message when the user initiates
-            that action.
-        </p>
-        <p>
-            The application may maintain a local cached location for
-            relevant app functionality. Users can delete this cached
-            information through the Data Deletion feature.
-        </p>
-    </section>
-
-    <section>
-        <h2>5. Microphone and Voice Data</h2>
-        <p>
-            The microphone may be used when voice monitoring is enabled.
-            Voice-related processing depends on the application's
-            implemented features and permissions.
-        </p>
-        <p>
-            Saved voice trigger phrases and associated recordings,
-            where created by the application, may be stored locally
-            on the device.
-        </p>
-        <p>
-            Users can remove supported saved voice phrases and
-            associated recordings using the Data Deletion feature.
-        </p>
-    </section>
-
-    <section>
-        <h2>6. Data Storage and Security</h2>
-        <p>
-            Aegis Voice stores certain application information locally
-            on the user's device, including saved emergency contacts,
-            voice-related information and cached location data.
-        </p>
-        <p>
-            Users should protect their devices with appropriate
-            screen locks and device security settings.
-        </p>
-        <p>
-            No application can guarantee absolute security of data
-            stored or transmitted through a device or external service.
-        </p>
-    </section>
-
-    <section>
-        <h2>7. Data Sharing</h2>
-        <p>
-            Aegis Voice does not sell users' personal information.
-        </p>
-        <p>
-            Emergency information may be shared with recipients
-            selected by the user when an emergency SMS or call
-            functionality is used.
-        </p>
-        <p>
-            SMS and telephone communication are handled through
-            the device's Android services and mobile network provider.
-            Their handling of information is subject to their own
-            policies and practices.
-        </p>
-    </section>
-
-    <section>
-        <h2>8. Data Deletion</h2>
-        <p>
-            Users can access the Data Deletion option from the
-            Aegis Voice application.
-        </p>
-        <p>
-            The feature is designed to remove supported locally
-            stored application data, including:
-        </p>
-
+        <h3>Automatic SMS</h3>
         <ul>
-            <li>Saved emergency contacts</li>
-            <li>Saved voice trigger phrases</li>
-            <li>Associated voice recordings covered by the deletion feature</li>
-            <li>Cached GPS location</li>
-            <li>Local copied voice model file</li>
+            <li>The App attempts to send an emergency SMS to your saved emergency contacts automatically.</li>
+            <li>You do not need to press a Send button for this automatic SMS.</li>
+            <li>The SMS may include an emergency alert, the detected wake phrase, a help message, and an available Google Maps location link.</li>
+            <li>If a fresh location is not available, the App may use the last-known or locally cached location.</li>
+            <li>If no location is available, the App may still attempt to send the SMS without a map link.</li>
+            <li>SMS is submitted through Android's SMS/telephony service and your mobile network operator.</li>
+            <li>SMS delivery is not guaranteed and may depend on SIM availability, network coverage, and operator restrictions.</li>
         </ul>
 
-        <p>
-            This action does not remove SMS messages already sent,
-            call history, Android permissions or information stored
-            outside the application's local storage.
-        </p>
+        <h3>Automatic Call</h3>
+        <ul>
+            <li>After the SMS submission step, the App may attempt to place an automatic call to your first valid saved emergency contact.</li>
+            <li>The current implementation checks SIM slot 1 for calling availability.</li>
+            <li>Call success depends on call permission, an active SIM, network coverage, and Android/device restrictions.</li>
+        </ul>
 
-        <p>
-            More information is available on our
-            <a href="https://opnora.com/aegis-voice/data-deletion.html">
-                Data Deletion page
-            </a>.
-        </p>
-    </section>
+        <div class="warning-box">
+            <p>Emergency SMS and calls use your SIM and mobile network. Network coverage, SIM availability, operator restrictions, and device settings can affect delivery or connection. SMS or call charges may apply.</p>
+        </div>
 
-    <section>
-        <h2>9. Children's Privacy</h2>
-        <p>
-            Aegis Voice is not specifically designed to collect
-            personal information from children. Parents or guardians
-            should supervise children's use of the application.
-        </p>
-    </section>
+        <h2>6. Manual SOS and Calling</h2>
+        <p>Aegis Voice also provides manual emergency options for situations where you can operate the phone but may not be able to speak or type.</p>
 
-    <section>
-        <h2>10. Changes to This Policy</h2>
-        <p>
-            This Privacy Policy may be updated when application
-            features or privacy practices change. The latest version
-            will be published on this page.
-        </p>
-        <p>
-            Users are encouraged to review this page periodically.
-        </p>
-    </section>
+        <h3>Manual SOS</h3>
+        <ul>
+            <li>The manual SOS feature attempts to send an emergency SMS to your saved emergency contacts.</li>
+            <li>Manual SOS is separate from the automatic Secret Word response.</li>
+            <li>You initiate manual SOS yourself from the App.</li>
+        </ul>
 
-    <section>
-        <h2>11. Contact Information</h2>
-        <p>
-            For questions about this Privacy Policy or Aegis Voice's
-            privacy practices, contact:
-        </p>
+        <h3>Manual Emergency Call</h3>
+        <ul>
+            <li>The App provides an option to manually call your first saved emergency contact.</li>
+            <li>You initiate this call yourself from the App.</li>
+        </ul>
 
-        <p>
-            <strong>Developer:</strong> Manish Prajapat<br>
-            <strong>Organization:</strong> EKALAVYU STARTUP<br>
-            <strong>Website:</strong>
-            <a href="https://opnora.com">https://opnora.com</a><br>
-            <strong>Email:</strong> opnoraweb@gmail.com
-        </p>
-    </section>
+        <h2>7. Location and Background Location</h2>
+        <p>Aegis Voice may access your device location for safety and emergency features.</p>
+        <ul>
+            <li>Approximate location may be used through coarse location access.</li>
+            <li>Precise location may be used through fine location access.</li>
+            <li>Background location may be used when emergency monitoring is active and the App needs location access while running in the background.</li>
+            <li>Location may be included as a Google Maps link in an emergency SMS sent to your saved emergency contacts.</li>
+            <li>If a fresh location is unavailable, a locally cached last-known location may be used.</li>
+        </ul>
+        <p>Location availability depends on Android location services, GPS settings, permissions, and device conditions.</p>
 
-</main>
+        <h2>8. Local Data Storage</h2>
+        <p>Aegis Voice stores the following data locally on your device:</p>
+        <ul>
+            <li>Emergency contacts, saved in the App's local SharedPreferences.</li>
+            <li>SOS runtime status, stored in local SharedPreferences.</li>
+            <li>Location fallback data, stored through a local LocationCache.</li>
+            <li>Voice-trigger settings and resources, stored in the App's local storage.</li>
+        </ul>
+        <p>This data remains on your device and is not uploaded to a developer-operated server.</p>
 
-<footer>
-    AEGIS VOICE • SAFETY BY DESIGN<br>
-    Powered by EKALAVYU STARTUP<br>
-    Created by Manish Prajapat 
-  pali Rajasthan 
-<br>
-    © 2026 EKALAVYU STARTUP. All Rights Reserved.
-</footer>
+        <h2>9. Developer Data Collection</h2>
+        <p>EKALAVYU STARTUP does not operate a backend server or cloud database for Aegis Voice user data.</p>
+        <ul>
+            <li>The App does not use Firebase.</li>
+            <li>The App does not include Firebase SDK.</li>
+            <li>The App does not use advertising SDKs.</li>
+            <li>The App does not use analytics SDKs.</li>
+            <li>The developer does not have a live-location dashboard for users.</li>
+            <li>The developer does not have a cloud database of emergency contacts.</li>
+            <li>Emergency SMS content and background microphone recordings are not uploaded to the developer's server.</li>
+        </ul>
+
+        <div class="highlight-box">
+            <p>This Policy does not claim that no data ever leaves your device. Emergency SMS and calls travel through your mobile network, and a location link may be shared with your emergency contacts.</p>
+        </div>
+
+        <h2>10. Sharing with Emergency Contacts and System Services</h2>
+        <p>When an emergency SMS is sent, the following information may be shared with your saved emergency contacts:</p>
+        <ul>
+            <li>An emergency alert message.</li>
+            <li>The detected wake phrase, when applicable.</li>
+            <li>A help message.</li>
+            <li>An available Google Maps location link, when location is available.</li>
+        </ul>
+        <p>The App also relies on Android and third-party system services to function:</p>
+        <ul>
+            <li>Android location services provide location information.</li>
+            <li>Android telephony services handle SMS and calls.</li>
+            <li>Your mobile network operator processes SMS and calls.</li>
+            <li>Google Maps or a compatible maps app may open a location link.</li>
+            <li>If Android or device speech recognition is used in any feature, that service's own privacy policy may apply.</li>
+        </ul>
+        <p>These are Android operating system services and telecom/network services, not third-party SDKs integrated into the App.</p>
+
+        <h2>11. Android Backup</h2>
+        <p>If Android backup is enabled on your device, App data may be included in your device backup according to your Android backup settings. You can manage or disable backup through your device's Android settings.</p>
+
+        <h2>12. Data Retention and Deletion</h2>
+        <p>You can manage and delete your local Aegis Voice data through the App:</p>
+        <ul>
+            <li>Emergency contacts can be edited or deleted from the App.</li>
+            <li>Supported voice-trigger data can be deleted through the App's available controls.</li>
+            <li>The App provides a local data deletion function.</li>
+            <li>Clearing App storage from Android Settings or uninstalling the App may also remove local App data.</li>
+            <li>Data included in a device backup is subject to your Android backup settings.</li>
+            <li>SMS messages already sent and telecom operator records cannot be deleted by the App.</li>
+            <li>Because the developer does not operate a user-data database, the developer does not have a separate data-deletion database.</li>
+        </ul>
+
+        <h2>13. Security</h2>
+        <p>Aegis Voice is designed to keep your safety data on your device. The App uses Android's standard local storage mechanisms for contacts, SOS status, location cache, and voice-trigger data.</p>
+        <p>No security measure can guarantee complete protection. You should use a strong device lock, keep your Android system updated, and review the permissions granted to the App.</p>
+
+        <h2>14. User Choices and Permissions</h2>
+        <p>You can control how Aegis Voice works through Android permissions and App settings:</p>
+        <ul>
+            <li>You can grant or deny Android permissions at any time through device settings.</li>
+            <li>You can turn monitoring ON or OFF from the App.</li>
+            <li>You can add, edit, or delete emergency contacts.</li>
+            <li>You can add, edit, or delete Secret Words and recordings.</li>
+            <li>You can delete local App data through the Data Deletion feature.</li>
+            <li>You can uninstall the App to remove its local data, subject to Android backup settings.</li>
+        </ul>
+
+        <h2>15. Children's Privacy</h2>
+        <p>Aegis Voice is intended for general audiences and is not directed specifically at children under 13. We do not knowingly collect personal information from children under 13 through the App. If you believe a child has provided personal information, please contact us so we can address the concern.</p>
+
+        <h2>16. Policy Updates</h2>
+        <p>We may update this Privacy Policy from time to time to reflect changes in the App, legal requirements, or our practices. The "Last Updated" date at the top of this Policy will be revised when changes are made. Continued use of the App after an update means you accept the revised Policy.</p>
+
+        <h2>17. Contact Information</h2>
+        <p>If you have questions about this Privacy Policy or how Aegis Voice handles data, contact us:</p>
+        <ul>
+            <li><strong>Organization:</strong> EKALAVYU STARTUP</li>
+            <li><strong>Website:</strong> <a href="https://opnora.com">https://opnora.com</a></li>
+            <li><strong>Email:</strong> <a href="mailto:Opnoraweb@gmail.com">Opnoraweb@gmail.com</a></li>
+        </ul>
+
+        <div class="highlight-box">
+            <p>This Privacy Policy describes the App's actual functionality as of the Last Updated date. If the App's features or data handling change, this Policy will be updated accordingly.</p>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <div class="brand">AEGIS VOICE • SAFETY BY DESIGN</div>
+        <div>Powered by EKALAVYU STARTUP</div>
+        <div>&copy; 2026 EKALAVYU STARTUP. All Rights Reserved.</div>
+    </div>
 
 </body>
 </html>
